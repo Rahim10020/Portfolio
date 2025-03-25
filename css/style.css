@@ -14,6 +14,7 @@ html, body {
 h1, h2, h3, h4, h5, h6, strong {
     color: var(--mainText);
     font-family: "Russo One", sans-serif;
+    font-weight: 500;
 }
 
 p, li, span, label, input, textarea {
@@ -30,6 +31,11 @@ ul {
     list-style: none;
 }
 
+/*h1 {font-size: 56px;}*/
+/*h2 {font-size: 34px;}*/
+/*h3 {font-size: 54px;}*/
+/*h4 {font-size: 54px;}*/
+
 .s1 {
     background-color: var(--mainColor);
     border-bottom: 1px solid var(--borderColor);
@@ -45,6 +51,38 @@ ul {
 .main-container {
     width: 1200px;
     margin: 0 auto;
+}
+
+
+.greeting-wrapper {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    border: 2px dashed lightcoral;
+    min-height: 10em;
+}
+
+.intro-wrapper {
+    background-color: var(--secondaryColor);
+    border: 1px solid var(--borderColor);
+    -webkit-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.75);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.nav-wrapper {
+    border: 1px dashed lightcoral;
+}
+
+.left-column {
+    border: 1px dashed lightcoral;
+}
+
+.right-column {
+    border: 1px dashed lightcoral;
 }
 
 @media screen and (max-width: 1200px) {
