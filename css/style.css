@@ -133,14 +133,21 @@ h1 {font-size: 56px;}
 
 .left-column {
     grid-area: left-column;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.left-column h5 {
+    text-align: center;
 }
 
 #profile-pic {
     display: block;
     margin: 0 auto;
     border: 2px solid var(--borderColor);
-    height: 200px;
-    width: 200px;
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
     object-fit: cover;
 }
 
