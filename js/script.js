@@ -1,5 +1,60 @@
 // ===========================================
-// GESTION DES THÈMES (Code existant amélioré)
+// CONFIGURATION EMAILJS
+// ===========================================
+
+const EMAILJS_CONFIG = {
+    SERVICE_ID: 'service_eauxtoj',
+    TEMPLATE_ID: 'template_z4293yq',
+    PUBLIC_KEY: 'n77pXLtp9kbv-fCwm'
+}
+
+// Initialisation EmailJS
+document.addEventListener('DOMContentLoaded', function () {
+    // Vérifier si EmailJS est chargé
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY)
+        console.log('EmailJS initialisé avec succès')
+    } else {
+        console.error('EmailJS non chargé')
+    }
+})
+
+// ===========================================
+// FONCTION D'ENVOI EMAIL
+// ===========================================
+
+async function sendEmail(formData) {
+    try {
+        // Préparer les données du template
+        const templateParams = {
+            from_name: formData.get('name'),
+            from_email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+            to_name: 'Rahim ALI',
+            reply_to: formData.get('email')
+        }
+
+        console.log('Envoi de l\'email avec les paramètres:', templateParams)
+
+        // Envoyer l'email via EmailJS
+        const response = await emailjs.send(
+            EMAILJS_CONFIG.SERVICE_ID,
+            EMAILJS_CONFIG.TEMPLATE_ID,
+            templateParams
+        )
+
+        console.log('Email envoyé avec succès:', response)
+        return response
+
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi:', error)
+        throw error
+    }
+}
+
+// ===========================================
+// GESTION DES THÈMES (Code existant)
 // ===========================================
 
 let theme = localStorage.getItem('theme')
@@ -18,7 +73,7 @@ for (var i = 0; themeDots.length > i; i++) {
         setTheme(mode)
     })
 
-    // Ajout de la navigation au clavier pour les thèmes
+    // Navigation au clavier pour les thèmes
     themeDots[i].addEventListener('keypress', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -50,7 +105,6 @@ function setTheme(mode) {
 // ANIMATIONS AU SCROLL
 // ===========================================
 
-// Observer pour les animations fade-in
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -94,7 +148,7 @@ function scrollToTop() {
 }
 
 // ===========================================
-// VALIDATION ET SOUMISSION DU FORMULAIRE
+// VALIDATION ET SOUMISSION DU FORMULAIRE (VERSION UNIFIÉE)
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -104,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnLoader = document.getElementById('btn-loader')
     const successMessage = document.getElementById('success-message')
 
-    // Gestion de la soumission du formulaire
+    // UN SEUL gestionnaire d'événements pour le formulaire
     form.addEventListener('submit', async function (e) {
         e.preventDefault()
 
@@ -114,26 +168,46 @@ document.addEventListener('DOMContentLoaded', function () {
             btnText.style.display = 'none'
             btnLoader.style.display = 'inline'
 
-            // Simulation d'envoi (remplacer par vraie logique d'envoi)
             try {
-                await simulateFormSubmission()
+                // Préparer les données du formulaire
+                const formData = new FormData(form)
+
+                // Envoyer l'email via EmailJS
+                await sendEmail(formData)
 
                 // Succès - réinitialiser le formulaire
                 form.reset()
                 clearErrors()
+                successMessage.innerHTML = `
+                    <strong>Message envoyé avec succès !</strong><br>
+                    Merci ${formData.get('name')}, je vous répondrai dans les plus brefs délais.
+                `
+                successMessage.style.backgroundColor = 'var(--success)'
                 successMessage.style.display = 'block'
 
                 // Faire défiler vers le message de succès
                 successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
-                // Cacher le message après 5 secondes
+                // Cacher le message après 7 secondes
                 setTimeout(() => {
                     successMessage.style.display = 'none'
-                }, 5000)
+                }, 7000)
 
             } catch (error) {
                 console.error('Erreur lors de l\'envoi:', error)
-                alert('Une erreur est survenue. Veuillez réessayer.')
+
+                // Afficher un message d'erreur à l'utilisateur
+                successMessage.innerHTML = `
+                    <strong>Erreur lors de l'envoi</strong><br>
+                    Une erreur est survenue. Veuillez réessayer ou me contacter directement.
+                `
+                successMessage.style.backgroundColor = '#dc3545'
+                successMessage.style.display = 'block'
+
+                setTimeout(() => {
+                    successMessage.style.display = 'none'
+                    successMessage.style.backgroundColor = 'var(--success)'
+                }, 7000)
             } finally {
                 // Réactiver le bouton
                 submitBtn.disabled = false
@@ -258,15 +332,6 @@ function isValidEmail(email) {
     return emailRegex.test(email)
 }
 
-function simulateFormSubmission() {
-    return new Promise((resolve) => {
-        // Simuler un délai d'envoi de 2 secondes
-        setTimeout(() => {
-            resolve()
-        }, 2000)
-    })
-}
-
 // ===========================================
 // GESTION DES MODALES POUR LES PROJETS
 // ===========================================
@@ -377,8 +442,6 @@ function openModal(projectId) {
     if (modalOverlay) {
         modalOverlay.style.display = 'flex'
         document.body.style.overflow = 'hidden'
-
-        // Focus sur la modale pour l'accessibilité
         modalOverlay.focus()
     }
 }
@@ -398,7 +461,7 @@ document.addEventListener('keydown', function (e) {
     }
 })
 
-// Fermer la modale en cliquant sur l'overlay (mais pas sur le contenu)
+// Fermer la modale en cliquant sur l'overlay
 document.addEventListener('DOMContentLoaded', function () {
     const modalOverlay = document.getElementById('modal-overlay')
     if (modalOverlay) {
@@ -414,7 +477,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // AMÉLIORATIONS DE NAVIGATION
 // ===========================================
 
-// Navigation fluide vers les sections
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('#navigation a[href^="#"]')
 
@@ -426,14 +488,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetElement = document.getElementById(targetId)
 
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80 // Offset pour la navigation fixe
+                const offsetTop = targetElement.offsetTop - 80
 
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
                 })
 
-                // Mettre en surbrillance le lien actif
                 navLinks.forEach(l => l.classList.remove('active'))
                 this.classList.add('active')
             }
@@ -441,59 +502,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 })
 
-// Détecter la section active pendant le scroll
-window.addEventListener('scroll', function () {
-    const sections = document.querySelectorAll('section[class^="s"]')
-    const navLinks = document.querySelectorAll('#navigation a[href^="#"]')
-
-    let currentSection = ''
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100
-        const sectionHeight = section.offsetHeight
-
-        if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-            currentSection = section.id || section.querySelector('[id]')?.id || ''
-        }
-    })
-
-    // Mettre à jour la navigation active
-    navLinks.forEach(link => {
-        link.classList.remove('active')
-        if (link.getAttribute('href') === '#' + currentSection) {
-            link.classList.add('active')
-        }
-    })
-})
-
-// ===========================================
-// AMÉLIORATION DES INTERACTIONS
-// ===========================================
-
-// Animation des dots de navigation au clic
-document.addEventListener('DOMContentLoaded', function () {
-    const browserDots = document.querySelectorAll('.browser-dot')
-
-    browserDots.forEach(dot => {
-        dot.addEventListener('click', function () {
-            // Animation de clic
-            this.style.transform = 'scale(0.8)'
-            setTimeout(() => {
-                this.style.transform = 'scale(1)'
-            }, 150)
-        })
-    })
-})
-
-// Parallax léger sur l'image de profil
-window.addEventListener('scroll', function () {
-    const profilePic = document.getElementById('profile-pic')
-    if (profilePic) {
-        const scrolled = window.pageYOffset
-        const parallax = scrolled * 0.1
-        profilePic.style.transform = `translateY(${parallax}px) scale(1)`
-    }
-})
 
 // ===========================================
 // FONCTIONS UTILITAIRES
@@ -523,24 +531,8 @@ window.addEventListener('scroll', debouncedScrollHandler)
 // INITIALISATION
 // ===========================================
 
-// S'assurer que tout est initialisé au chargement de la page
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Portfolio initialisé avec succès !')
-
-    // Vérifier que tous les éléments nécessaires sont présents
-    const requiredElements = [
-        'contact-form',
-        'modal-overlay',
-        'backToTop',
-        'theme-style'
-    ]
-
-    requiredElements.forEach(id => {
-        const element = document.getElementById(id)
-        if (!element) {
-            console.warn(`Élément manquant: ${id}`)
-        }
-    })
 
     // Animation d'entrée pour le titre
     const introTitle = document.getElementById('intro')
