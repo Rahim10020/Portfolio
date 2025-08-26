@@ -12,7 +12,15 @@
     --previewBg: rgb(251, 249, 243, 0.8);
     --previewShadow: #f0ead6;
 
-    --buttonColor: black; 
+    --buttonColor: black;
+    --accent: #17a2b8;
+    --success: #28a745;
+    --error: #dc3545;
+}
+
+/* Scroll fluide */
+html {
+    scroll-behavior: smooth;
 }
 
 html,
@@ -22,7 +30,7 @@ body {
 }
 
 body * {
-    transition: 0.3s ease-in;
+    transition: 0.3s ease-in-out;
 }
 
 h1,
@@ -33,7 +41,7 @@ h5,
 h6,
 strong {
     color: var(--mainText);
-    font-family: "Russo One", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 500;
 }
 
@@ -44,12 +52,23 @@ label,
 input,
 textarea {
     color: var(--secondaryText);
-    font-family: "Roboto Mono", monospace;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 a {
     text-decoration: none;
-    color: #17a2b8;
+    color: var(--accent);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--buttonColor);
+    transform: translateY(-2px);
+}
+
+a:focus {
+    outline: 2px solid var(--buttonColor);
+    outline-offset: 2px;
 }
 
 ul {
@@ -80,6 +99,49 @@ h6 {
     font-size: 26px;
 }
 
+/* Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.typing-animation {
+    overflow: hidden;
+    border-right: 3px solid var(--buttonColor);
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+    text-align: center;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--buttonColor)
+    }
+}
+
 .s1 {
     background-color: var(--mainColor);
     border-bottom: 1px solid var(--borderColor);
@@ -97,12 +159,15 @@ h6 {
     margin: 0 auto;
 }
 
-
 .greeting-wrapper {
     display: grid;
     justify-content: center;
     align-content: center;
     min-height: 10em;
+}
+
+.greeting-wrapper h2 {
+    margin: 0;
 }
 
 .intro-wrapper {
@@ -135,17 +200,24 @@ h6 {
 #navigation {
     margin: 0;
     padding: 10px;
-    transition: all 0.4s ease-out"
 }
 
 #navigation a {
     color: var(--mainText);
+    padding: 8px 12px;
+    border-radius: 5px;
+    position: relative;
 }
 
 #navigation a:hover {
     color: var(--buttonColor);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
+#navigation a:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
 
 #navigation li {
     display: inline-block;
@@ -179,6 +251,12 @@ h6 {
     -webkit-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.browser-dot:hover {
+    transform: scale(1.2);
 }
 
 .left-column {
@@ -199,6 +277,12 @@ h6 {
     height: 250px;
     width: 250px;
     object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+#profile-pic:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .theme-options-wrapper {
@@ -221,6 +305,21 @@ h6 {
     margin-bottom: 10px;
     margin-right: 4px;
     border: 2px solid var(--themeDotBorder);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.theme-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 .left-column h5 {
@@ -231,6 +330,17 @@ h6 {
     height: 35px;
     width: 35px;
     border-width: 3px;
+    transform: translateY(-2px);
+}
+
+.theme-dot:hover::after {
+    width: 20px;
+    height: 20px;
+}
+
+.theme-dot:focus {
+    outline: 2px solid var(--buttonColor);
+    outline-offset: 2px;
 }
 
 #light-mode {
@@ -269,11 +379,16 @@ h6 {
     height: 180px;
     padding-left: 30px;
     padding-top: 30px;
+    transition: all 0.3s ease;
+}
+
+#preview-shadow:hover {
+    transform: translateY(-5px);
 }
 
 #preview {
     width: 300px;
-    border: 1.5px solid #17a2b8;
+    border: 1.5px solid var(--accent);
     background-color: var(--previewBg);
     padding: 15px;
     position: relative;
@@ -283,9 +398,14 @@ h6 {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    border: 1.5px solid #17a2b8;
+    border: 1.5px solid var(--accent);
     background-color: #fff;
     position: absolute;
+    transition: all 0.3s ease;
+}
+
+#preview:hover .corner {
+    transform: scale(1.3);
 }
 
 #corner-tl {
@@ -310,7 +430,7 @@ h6 {
 
 .about-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px ,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     padding-top: 50px;
     padding-bottom: 50px;
     gap: 100px;
@@ -320,16 +440,55 @@ h6 {
     display: flex;
     justify-content: space-evenly;
     background-color: var(--previewShadow);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#skills ul li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 18px;
+}
+
+#skills ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--buttonColor);
+    font-weight: bold;
 }
 
 #social-image {
     width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+#social-image:hover {
+    transform: scale(1.02);
 }
 
 .social-links {
     display: grid;
     align-content: center;
     text-align: center;
+}
+
+.social-link {
+    display: inline-block;
+    margin: 8px 0;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: var(--mainColor);
+    border: 1px solid var(--borderColor);
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background-color: var(--buttonColor);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .post-wrapper {
@@ -345,6 +504,11 @@ h6 {
     width: 100%;
     height: 180px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.post:hover .thumbnail {
+    transform: scale(1.05);
 }
 
 .post-preview {
@@ -357,27 +521,94 @@ h6 {
     -webkit-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.post:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .post-title {
     color: black;
-    margin: 0;
+    margin: 0 0 10px 0;
 }
 
 .post-intro {
     color: #4b5156;
     font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.5;
 }
 
+/* Nouveaux styles pour les tags technologiques */
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.tech-tag {
+    background-color: var(--accent);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+    background-color: var(--buttonColor);
+    transform: scale(1.05);
+}
+
+.project-link {
+    color: var(--accent);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.project-link:hover {
+    color: var(--buttonColor);
+}
+
+/* Styles pour le formulaire amélioré */
 #submit-btn {
     margin-top: 10px;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     color: white;
     background-color: var(--buttonColor);
     border: none;
     cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#submit-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#submit-btn:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+#submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 #contact-form {
@@ -385,29 +616,65 @@ h6 {
     max-width: 600px;
     margin: 0 auto;
     border: 1px solid var(--borderColor);
-    padding: 15px;
-    border-radius: 5px;
+    padding: 25px;
+    border-radius: 10px;
     background-color: var(--mainColor);
     margin-bottom: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 #contact-form label {
     line-height: 2.7em;
+    font-weight: 600;
+    color: var(--mainText);
 }
 
 #contact-form textarea {
-    min-height: 100px;
+    min-height: 120px;
     font-size: 14px;
+    resize: vertical;
 }
 
 .input-field {
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 12px;
     background-color: var(--secondaryColor);
-    border-radius: 5px;
-    border: 1px solid var(--borderColor);
+    border-radius: 8px;
+    border: 2px solid var(--borderColor);
     font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    font-family: "Roboto Mono", monospace;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(23, 162, 184, 0.3);
+}
+
+.input-field.error {
+    border-color: var(--error);
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.3);
+}
+
+.error-message {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+    font-style: italic;
+}
+
+.success-message {
+    background-color: var(--success);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    display: none;
+    text-align: center;
+    font-weight: 500;
 }
 
 #gotop {
@@ -416,12 +683,188 @@ h6 {
     float: right;
     font-weight: bold;
     margin-bottom: 40px;
-    padding: 10px;
+    padding: 12px 20px;
     font-size: 15px;
     border: 2px solid var(--buttonColor);
-    border-radius: 5px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
+#gotop:hover {
+    background-color: var(--buttonColor);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouton flottant retour en haut */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--buttonColor);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--accent);
+}
+
+/* Styles pour les modales */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: var(--secondaryColor);
+    border-radius: 15px;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid var(--borderColor);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 35px;
+    cursor: pointer;
+    color: var(--mainText);
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--buttonColor);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.project-modal {
+    padding: 40px;
+}
+
+.modal-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.project-modal h2 {
+    margin-bottom: 20px;
+    color: var(--mainText);
+}
+
+.project-description {
+    margin-bottom: 25px;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.modal-tech-stack,
+.modal-features {
+    margin-bottom: 25px;
+}
+
+.modal-tech-stack h4,
+.modal-features h4 {
+    margin-bottom: 15px;
+    color: var(--mainText);
+    font-size: 18px;
+}
+
+.tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-features ul {
+    padding-left: 25px;
+    line-height: 1.8;
+}
+
+.modal-features li {
+    margin-bottom: 10px;
+    color: var(--secondaryText);
+    position: relative;
+}
+
+.modal-features li::before {
+    content: '✓';
+    color: var(--success);
+    font-weight: bold;
+    position: absolute;
+    left: -20px;
+}
+
+.modal-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.modal-btn {
+    padding: 15px 30px;
+    background-color: var(--buttonColor);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+    flex: 1;
+    font-weight: 500;
+}
+
+.modal-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries */
 @media screen and (max-width: 1200px) {
     .main-container {
         width: 95%;
@@ -436,7 +879,76 @@ h6 {
             'left-column'
             'right-column';
     }
+
     .right-column {
         justify-content: center;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .about-wrapper {
+        gap: 50px;
+    }
+
+    #skills {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .project-modal {
+        padding: 25px;
+    }
+
+    .modal-links {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-container {
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    .post-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    #profile-pic {
+        width: 200px;
+        height: 200px;
+    }
+
+    #preview-shadow {
+        width: 250px;
+        height: 150px;
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+
+    #preview {
+        width: 250px;
+    }
+
+    .typing-animation {
+        font-size: 24px;
+    }
+
+    .back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
     }
 }
