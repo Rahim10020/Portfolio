@@ -340,7 +340,8 @@ function isValidEmail(email) {
 const projectData = {
     project1: {
         title: 'Plateforme E-commerce Django',
-        image: './images/ecran1.png',
+        images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
+        currentImageIndex: 0,
         description: 'Plateforme e-commerce complète développée avec Django, intégrant un système de gestion des produits, panier d\'achat, authentification utilisateur et système de paiement sécurisé avec Stripe.',
         technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript', 'Stripe API', 'Redis'],
         features: [
@@ -358,7 +359,8 @@ const projectData = {
     },
     project2: {
         title: 'Application Mobile de Fitness',
-        image: './images/ecran2.png',
+        images: ['./images/ecran2.png', './images/history.png', './images/filter.png'],
+        currentImageIndex: 0,
         description: 'Application mobile cross-platform développée avec Flutter pour le suivi d\'entraînements sportifs. Synchronisation en temps réel avec Firebase et fonctionnalités avancées de tracking.',
         technologies: ['Flutter', 'Dart', 'Firebase', 'Provider', 'SQLite', 'Google Maps API'],
         features: [
@@ -376,7 +378,8 @@ const projectData = {
     },
     project3: {
         title: 'Gestionnaire de Tâches Android',
-        image: './images/ecran3.png',
+        images: ['./images/ecran3.png', './images/ecran.png', './images/rahim.jpg'],
+        currentImageIndex: 0,
         description: 'Application Android native pour la gestion de tâches quotidiennes, construite avec Kotlin en suivant l\'architecture MVVM pour une maintenabilité optimale et des performances élevées.',
         technologies: ['Kotlin', 'Room Database', 'MVVM', 'LiveData', 'ViewBinding', 'Material Design'],
         features: [
@@ -394,6 +397,36 @@ const projectData = {
     }
 }
 
+// Fonction pour changer l'image principale lors du clic sur une miniature
+function changeMainImage(clickedThumbnail, projectId) {
+    const project = projectData[projectId]
+    if (!project) return
+
+    // Trouver l'index de l'image cliquée
+    const clickedSrc = clickedThumbnail.src
+    const imageIndex = project.images.findIndex(img => img === clickedSrc)
+
+    if (imageIndex !== -1) {
+        project.currentImageIndex = imageIndex
+
+        // Mettre à jour l'image principale
+        const mainThumbnail = clickedThumbnail.closest('.project-gallery').querySelector('.main-thumbnail')
+        if (mainThumbnail) {
+            mainThumbnail.src = clickedSrc
+        }
+
+        // Mettre à jour les classes active des miniatures
+        const thumbnails = clickedThumbnail.closest('.project-gallery').querySelectorAll('.gallery-thumbnails .thumbnail')
+        thumbnails.forEach((thumb, index) => {
+            if (index === imageIndex) {
+                thumb.classList.add('active')
+            } else {
+                thumb.classList.remove('active')
+            }
+        })
+    }
+}
+
 function openModal(projectId) {
     const project = projectData[projectId]
     if (!project) {
@@ -407,26 +440,50 @@ function openModal(projectId) {
         return
     }
 
+    // S'assurer que currentImageIndex existe
+    if (project.currentImageIndex === undefined) {
+        project.currentImageIndex = 0
+    }
+
+    const currentImage = project.images[project.currentImageIndex]
+
     modalBody.innerHTML = `
         <div class="project-modal">
-            <img src="${project.image}" alt="${project.title}" class="modal-image" />
+            <div class="modal-gallery">
+                <img src="${currentImage}" alt="${project.title}" class="modal-image" />
+                ${project.images.length > 1 ? `
+                    <div class="modal-gallery-nav">
+                        <button class="gallery-nav-btn prev" onclick="changeModalImage('${projectId}', 'prev')" ${project.currentImageIndex === 0 ? 'disabled' : ''}>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="gallery-indicators">
+                            ${project.images.map((_, index) =>
+        `<span class="indicator ${index === project.currentImageIndex ? 'active' : ''}" onclick="setModalImage('${projectId}', ${index})"></span>`
+    ).join('')}
+                        </div>
+                        <button class="gallery-nav-btn next" onclick="changeModalImage('${projectId}', 'next')" ${project.currentImageIndex === project.images.length - 1 ? 'disabled' : ''}>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
             <h2>${project.title}</h2>
             <p class="project-description">${project.description}</p>
-            
+
             <div class="modal-tech-stack">
                 <h4>Technologies utilisées:</h4>
                 <div class="tech-grid">
                     ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                 </div>
             </div>
-            
+
             <div class="modal-features">
                 <h4>Fonctionnalités principales:</h4>
                 <ul>
                     ${project.features.map(feature => `<li>${feature}</li>`).join('')}
                 </ul>
             </div>
-            
+
             <div class="modal-links">
                 <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-btn">
                     Code source
@@ -444,6 +501,57 @@ function openModal(projectId) {
         document.body.style.overflow = 'hidden'
         modalOverlay.focus()
     }
+}
+
+// Fonctions de navigation pour la galerie dans la modale
+function changeModalImage(projectId, direction) {
+    const project = projectData[projectId]
+    if (!project) return
+
+    if (direction === 'prev' && project.currentImageIndex > 0) {
+        project.currentImageIndex--
+    } else if (direction === 'next' && project.currentImageIndex < project.images.length - 1) {
+        project.currentImageIndex++
+    }
+
+    updateModalGallery(projectId)
+}
+
+function setModalImage(projectId, imageIndex) {
+    const project = projectData[projectId]
+    if (!project) return
+
+    project.currentImageIndex = imageIndex
+    updateModalGallery(projectId)
+}
+
+function updateModalGallery(projectId) {
+    const project = projectData[projectId]
+    if (!project) return
+
+    const modalBody = document.getElementById('modal-body')
+    if (!modalBody) return
+
+    const currentImage = project.images[project.currentImageIndex]
+    const modalImage = modalBody.querySelector('.modal-image')
+    const prevBtn = modalBody.querySelector('.gallery-nav-btn.prev')
+    const nextBtn = modalBody.querySelector('.gallery-nav-btn.next')
+    const indicators = modalBody.querySelectorAll('.indicator')
+
+    if (modalImage) modalImage.src = currentImage
+
+    // Mettre à jour les boutons de navigation
+    if (prevBtn) prevBtn.disabled = project.currentImageIndex === 0
+    if (nextBtn) nextBtn.disabled = project.currentImageIndex === project.images.length - 1
+
+    // Mettre à jour les indicateurs
+    indicators.forEach((indicator, index) => {
+        if (index === project.currentImageIndex) {
+            indicator.classList.add('active')
+        } else {
+            indicator.classList.remove('active')
+        }
+    })
 }
 
 function closeModal() {
