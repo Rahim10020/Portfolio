@@ -636,11 +636,60 @@ const debouncedScrollHandler = debounce(() => {
 window.addEventListener('scroll', debouncedScrollHandler)
 
 // ===========================================
+// GÉNÉRATION DYNAMIQUE DES PROJETS
+// ===========================================
+
+function generateProjectsHTML() {
+    const postWrapper = document.querySelector('.post-wrapper')
+    if (!postWrapper) return
+
+    postWrapper.innerHTML = ''
+
+    Object.keys(projectData).forEach(projectId => {
+        const project = projectData[projectId]
+        if (!project) return
+
+        const projectElement = document.createElement('div')
+        projectElement.innerHTML = `
+            <div class="post">
+                <div class="project-gallery">
+                    <div class="gallery-thumbnails">
+                        ${project.images.map((image, index) =>
+            `<img class="thumbnail ${index === 0 ? 'active' : ''}" src="${image}"
+                                alt="Capture d'écran ${index + 1} du projet ${project.title}"
+                                onclick="changeMainImage(this, '${projectId}')" />`
+        ).join('')}
+                    </div>
+                    <img class="main-thumbnail" src="${project.images[0]}" alt="Capture d'écran principale du projet ${project.title}" />
+                </div>
+                <div class="post-preview">
+                    <h6 class="post-title">${project.title}</h6>
+                    <div class="tech-stack">
+                        ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    <p class="post-intro">
+                        ${project.description.length > 100 ?
+                project.description.substring(0, 100) + '...' :
+                project.description}
+                    </p>
+                    <a href="#" onclick="openModal('${projectId}')" class="project-link">Voir les détails</a>
+                </div>
+            </div>
+        `
+
+        postWrapper.appendChild(projectElement.firstElementChild)
+    })
+}
+
+// ===========================================
 // INITIALISATION
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Portfolio initialisé avec succès !')
+
+    // Générer les projets dynamiquement
+    generateProjectsHTML()
 
     // Animation d'entrée pour le titre
     const introTitle = document.getElementById('intro')
