@@ -482,6 +482,16 @@ h6 {
     background-color: var(--mainColor);
     border: 1px solid var(--borderColor);
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--secondaryText);
+}
+
+.social-link i {
+    font-size: 1.5em;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+    min-width: 24px;
+    text-align: center;
 }
 
 .social-link:hover {
@@ -489,6 +499,14 @@ h6 {
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-link:hover i {
+    transform: scale(1.1);
+}
+
+.social-link:hover span {
+    color: white;
 }
 
 .post-wrapper {
