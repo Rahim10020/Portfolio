@@ -1,5 +1,5 @@
 // ===========================================
-// CONFIGURATION EMAILJS
+// EMAILJS CONFIGURATION
 // ===========================================
 
 const EMAILJS_CONFIG = {
@@ -8,24 +8,24 @@ const EMAILJS_CONFIG = {
     PUBLIC_KEY: 'n77pXLtp9kbv-fCwm'
 }
 
-// Initialisation EmailJS
+// EmailJS Initialization
 document.addEventListener('DOMContentLoaded', function () {
-    // Vérifier si EmailJS est chargé
+    // Check if EmailJS is loaded
     if (typeof emailjs !== 'undefined') {
         emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY)
-        console.log('EmailJS initialisé avec succès')
+        console.log('EmailJS initialized successfully')
     } else {
-        console.error('EmailJS non chargé')
+        console.error('EmailJS not loaded')
     }
 })
 
 // ===========================================
-// FONCTION D'ENVOI EMAIL
+// EMAIL SENDING FUNCTION
 // ===========================================
 
 async function sendEmail(formData) {
     try {
-        // Préparer les données du template
+        // Prepare template data
         const templateParams = {
             from_name: formData.get('name'),
             from_email: formData.get('email'),
@@ -35,26 +35,26 @@ async function sendEmail(formData) {
             reply_to: formData.get('email')
         }
 
-        console.log('Envoi de l\'email avec les paramètres:', templateParams)
+        console.log('Sending email with parameters:', templateParams)
 
-        // Envoyer l'email via EmailJS
+        // Send email via EmailJS
         const response = await emailjs.send(
             EMAILJS_CONFIG.SERVICE_ID,
             EMAILJS_CONFIG.TEMPLATE_ID,
             templateParams
         )
 
-        console.log('Email envoyé avec succès:', response)
+        console.log('Email sent successfully:', response)
         return response
 
     } catch (error) {
-        console.error('Erreur lors de l\'envoi:', error)
+        console.error('Error sending email:', error)
         throw error
     }
 }
 
 // ===========================================
-// GESTION DES THÈMES (Code existant)
+// THEME MANAGEMENT (Existing Code)
 // ===========================================
 
 let theme = localStorage.getItem('theme')
@@ -73,7 +73,7 @@ for (var i = 0; themeDots.length > i; i++) {
         setTheme(mode)
     })
 
-    // Navigation au clavier pour les thèmes
+    // Keyboard navigation for themes
     themeDots[i].addEventListener('keypress', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -102,7 +102,7 @@ function setTheme(mode) {
 }
 
 // ===========================================
-// ANIMATIONS AU SCROLL
+// SCROLL ANIMATIONS
 // ===========================================
 
 const observerOptions = {
@@ -118,7 +118,7 @@ const observer = new IntersectionObserver((entries) => {
     })
 }, observerOptions)
 
-// Appliquer l'observer à tous les éléments avec la classe fade-in
+// Apply observer to all elements with fade-in class
 document.addEventListener('DOMContentLoaded', function () {
     const fadeElements = document.querySelectorAll('.fade-in')
     fadeElements.forEach(el => {
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 // ===========================================
-// BOUTON RETOUR EN HAUT
+// BACK TO TOP BUTTON
 // ===========================================
 
 const backToTopBtn = document.getElementById('backToTop')
@@ -148,7 +148,7 @@ function scrollToTop() {
 }
 
 // ===========================================
-// VALIDATION ET SOUMISSION DU FORMULAIRE (VERSION UNIFIÉE)
+// FORM VALIDATION AND SUBMISSION (UNIFIED VERSION)
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -158,48 +158,48 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnLoader = document.getElementById('btn-loader')
     const successMessage = document.getElementById('success-message')
 
-    // UN SEUL gestionnaire d'événements pour le formulaire
+    // Single event handler for form
     form.addEventListener('submit', async function (e) {
         e.preventDefault()
 
         if (validateForm()) {
-            // Désactiver le bouton et afficher le loader
+            // Disable button and show loader
             submitBtn.disabled = true
             btnText.style.display = 'none'
             btnLoader.style.display = 'inline'
 
             try {
-                // Préparer les données du formulaire
+                // Prepare form data
                 const formData = new FormData(form)
 
-                // Envoyer l'email via EmailJS
+                // Send email via EmailJS
                 await sendEmail(formData)
 
-                // Succès - réinitialiser le formulaire
+                // Success - reset form
                 form.reset()
                 clearErrors()
                 successMessage.innerHTML = `
-                    <strong>Message envoyé avec succès !</strong><br>
-                    Merci ${formData.get('name')}, je vous répondrai dans les plus brefs délais.
+                    <strong>Message sent successfully!</strong><br>
+                    Thank you ${formData.get('name')}, I'll get back to you as soon as possible.
                 `
                 successMessage.style.backgroundColor = 'var(--success)'
                 successMessage.style.display = 'block'
 
-                // Faire défiler vers le message de succès
+                // Scroll to success message
                 successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
-                // Cacher le message après 7 secondes
+                // Hide message after 7 seconds
                 setTimeout(() => {
                     successMessage.style.display = 'none'
                 }, 7000)
 
             } catch (error) {
-                console.error('Erreur lors de l\'envoi:', error)
+                console.error('Error sending:', error)
 
-                // Afficher un message d'erreur à l'utilisateur
+                // Show error message to user
                 successMessage.innerHTML = `
-                    <strong>Erreur lors de l'envoi</strong><br>
-                    Une erreur est survenue. Veuillez réessayer ou me contacter directement.
+                    <strong>Error sending message</strong><br>
+                    An error occurred. Please try again or contact me directly.
                 `
                 successMessage.style.backgroundColor = '#dc3545'
                 successMessage.style.display = 'block'
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     successMessage.style.backgroundColor = 'var(--success)'
                 }, 7000)
             } finally {
-                // Réactiver le bouton
+                // Re-enable button
                 submitBtn.disabled = false
                 btnText.style.display = 'inline'
                 btnLoader.style.display = 'none'
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
-    // Validation en temps réel
+    // Real-time validation
     const fields = ['name', 'subject', 'email', 'message']
     fields.forEach(fieldName => {
         const field = document.getElementById(fieldName)
@@ -250,50 +250,50 @@ function validateField(fieldName) {
     let isValid = true
     let errorMessage = ''
 
-    // Validation selon le type de champ
+    // Validation according to field type
     switch (fieldName) {
         case 'name':
             if (!field.value.trim()) {
-                errorMessage = 'Veuillez saisir votre nom'
+                errorMessage = 'Please enter your name'
                 isValid = false
             } else if (field.value.trim().length < 2) {
-                errorMessage = 'Le nom doit contenir au moins 2 caractères'
+                errorMessage = 'Name must contain at least 2 characters'
                 isValid = false
             }
             break
 
         case 'subject':
             if (!field.value.trim()) {
-                errorMessage = 'Veuillez saisir un sujet'
+                errorMessage = 'Please enter a subject'
                 isValid = false
             } else if (field.value.trim().length < 3) {
-                errorMessage = 'Le sujet doit contenir au moins 3 caractères'
+                errorMessage = 'Subject must contain at least 3 characters'
                 isValid = false
             }
             break
 
         case 'email':
             if (!field.value.trim()) {
-                errorMessage = 'Veuillez saisir votre email'
+                errorMessage = 'Please enter your email'
                 isValid = false
             } else if (!isValidEmail(field.value)) {
-                errorMessage = 'Veuillez saisir un email valide'
+                errorMessage = 'Please enter a valid email'
                 isValid = false
             }
             break
 
         case 'message':
             if (!field.value.trim()) {
-                errorMessage = 'Veuillez saisir votre message'
+                errorMessage = 'Please enter your message'
                 isValid = false
             } else if (field.value.trim().length < 10) {
-                errorMessage = 'Le message doit contenir au moins 10 caractères'
+                errorMessage = 'Message must contain at least 10 characters'
                 isValid = false
             }
             break
     }
 
-    // Afficher ou cacher l'erreur
+    // Show or hide error
     if (isValid) {
         field.classList.remove('error')
         errorElement.style.display = 'none'
@@ -333,10 +333,10 @@ function isValidEmail(email) {
 }
 
 // ===========================================
-// GESTION DES MODALES POUR LES PROJETS
+// PROJECT MODAL MANAGEMENT
 // ===========================================
 
-// Données des projets
+// Project data
 const projectData = {
     project1: {
         title: 'Plateforme E-commerce Django',
@@ -397,25 +397,25 @@ const projectData = {
     }
 }
 
-// Fonction pour changer l'image principale lors du clic sur une miniature
+// Function to change main image when clicking on thumbnail
 function changeMainImage(clickedThumbnail, projectId) {
     const project = projectData[projectId]
     if (!project) return
 
-    // Trouver l'index de l'image cliquée
+    // Find the index of the clicked image
     const clickedSrc = clickedThumbnail.src
     const imageIndex = project.images.findIndex(img => img === clickedSrc)
 
     if (imageIndex !== -1) {
         project.currentImageIndex = imageIndex
 
-        // Mettre à jour l'image principale
+        // Update main image
         const mainThumbnail = clickedThumbnail.closest('.project-gallery').querySelector('.main-thumbnail')
         if (mainThumbnail) {
             mainThumbnail.src = clickedSrc
         }
 
-        // Mettre à jour les classes active des miniatures
+        // Update active classes for thumbnails
         const thumbnails = clickedThumbnail.closest('.project-gallery').querySelectorAll('.gallery-thumbnails .thumbnail')
         thumbnails.forEach((thumb, index) => {
             if (index === imageIndex) {
@@ -430,17 +430,17 @@ function changeMainImage(clickedThumbnail, projectId) {
 function openModal(projectId) {
     const project = projectData[projectId]
     if (!project) {
-        console.error('Projet non trouvé:', projectId)
+        console.error('Project not found:', projectId)
         return
     }
 
     const modalBody = document.getElementById('modal-body')
     if (!modalBody) {
-        console.error('Élément modal-body non trouvé')
+        console.error('Modal-body element not found')
         return
     }
 
-    // S'assurer que currentImageIndex existe
+    // Ensure currentImageIndex exists
     if (project.currentImageIndex === undefined) {
         project.currentImageIndex = 0
     }
@@ -471,14 +471,14 @@ function openModal(projectId) {
             <p class="project-description">${project.description}</p>
 
             <div class="modal-tech-stack">
-                <h4>Technologies utilisées:</h4>
+                <h4>Technologies Used:</h4>
                 <div class="tech-grid">
                     ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                 </div>
             </div>
 
             <div class="modal-features">
-                <h4>Fonctionnalités principales:</h4>
+                <h4>Main Features:</h4>
                 <ul>
                     ${project.features.map(feature => `<li>${feature}</li>`).join('')}
                 </ul>
@@ -486,10 +486,10 @@ function openModal(projectId) {
 
             <div class="modal-links">
                 <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-btn">
-                    Code source
+                    Source Code
                 </a>
                 <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="modal-btn">
-                    Voir la démo
+                    View Demo
                 </a>
             </div>
         </div>
@@ -503,7 +503,7 @@ function openModal(projectId) {
     }
 }
 
-// Fonctions de navigation pour la galerie dans la modale
+// Navigation functions for gallery in modal
 function changeModalImage(projectId, direction) {
     const project = projectData[projectId]
     if (!project) return
@@ -540,11 +540,11 @@ function updateModalGallery(projectId) {
 
     if (modalImage) modalImage.src = currentImage
 
-    // Mettre à jour les boutons de navigation
+    // Update navigation buttons
     if (prevBtn) prevBtn.disabled = project.currentImageIndex === 0
     if (nextBtn) nextBtn.disabled = project.currentImageIndex === project.images.length - 1
 
-    // Mettre à jour les indicateurs
+    // Update indicators
     indicators.forEach((indicator, index) => {
         if (index === project.currentImageIndex) {
             indicator.classList.add('active')
@@ -562,14 +562,14 @@ function closeModal() {
     }
 }
 
-// Fermer la modale avec la touche Escape
+// Close modal with Escape key
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeModal()
     }
 })
 
-// Fermer la modale en cliquant sur l'overlay
+// Close modal by clicking on overlay
 document.addEventListener('DOMContentLoaded', function () {
     const modalOverlay = document.getElementById('modal-overlay')
     if (modalOverlay) {
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 // ===========================================
-// AMÉLIORATIONS DE NAVIGATION
+// NAVIGATION IMPROVEMENTS
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -612,10 +612,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // ===========================================
-// FONCTIONS UTILITAIRES
+// UTILITY FUNCTIONS
 // ===========================================
 
-// Débounce pour optimiser les événements de scroll
+// Debounce to optimize scroll events
 function debounce(func, wait) {
     let timeout
     return function executedFunction(...args) {
@@ -628,15 +628,15 @@ function debounce(func, wait) {
     }
 }
 
-// Appliquer le debounce aux événements de scroll intensifs
+// Apply debounce to intensive scroll events
 const debouncedScrollHandler = debounce(() => {
-    // Code de scroll optimisé peut être ajouté ici
+    // Optimized scroll code can be added here
 }, 10)
 
 window.addEventListener('scroll', debouncedScrollHandler)
 
 // ===========================================
-// GÉNÉRATION DYNAMIQUE DES PROJETS
+// DYNAMIC PROJECT GENERATION
 // ===========================================
 
 function generateProjectsHTML() {
@@ -656,11 +656,11 @@ function generateProjectsHTML() {
                     <div class="gallery-thumbnails">
                         ${project.images.map((image, index) =>
             `<img class="thumbnail ${index === 0 ? 'active' : ''}" src="${image}"
-                                alt="Capture d'écran ${index + 1} du projet ${project.title}"
+                                alt="Screenshot ${index + 1} of project ${project.title}"
                                 onclick="changeMainImage(this, '${projectId}')" />`
         ).join('')}
                     </div>
-                    <img class="main-thumbnail" src="${project.images[0]}" alt="Capture d'écran principale du projet ${project.title}" />
+                    <img class="main-thumbnail" src="${project.images[0]}" alt="Main screenshot of project ${project.title}" />
                 </div>
                 <div class="post-preview">
                     <h6 class="post-title">${project.title}</h6>
@@ -672,7 +672,7 @@ function generateProjectsHTML() {
                 project.description.substring(0, 100) + '...' :
                 project.description}
                     </p>
-                    <a href="#" onclick="openModal('${projectId}')" class="project-link">Voir les détails</a>
+                    <a href="#" onclick="openModal('${projectId}')" class="project-link">View Details</a>
                 </div>
             </div>
         `
@@ -682,16 +682,16 @@ function generateProjectsHTML() {
 }
 
 // ===========================================
-// INITIALISATION
+// INITIALIZATION
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Portfolio initialisé avec succès !')
+    console.log('Portfolio initialized successfully!')
 
-    // Générer les projets dynamiquement
+    // Generate projects dynamically
     generateProjectsHTML()
 
-    // Animation d'entrée pour le titre
+    // Entry animation for title
     const introTitle = document.getElementById('intro')
     if (introTitle) {
         setTimeout(() => {
