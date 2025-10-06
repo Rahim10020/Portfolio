@@ -342,7 +342,6 @@ const projectData = {
         title: 'Plateforme E-commerce Django',
         images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
         currentImageIndex: 0,
-        description: 'Plateforme e-commerce complète développée avec Django, intégrant un système de gestion des produits, panier d\'achat, authentification utilisateur et système de paiement sécurisé avec Stripe.',
         technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript', 'Stripe API', 'Redis'],
         features: [
             'Interface d\'administration complète pour la gestion des produits',
@@ -361,7 +360,6 @@ const projectData = {
         title: 'Application Mobile de Fitness',
         images: ['./images/ecran2.png', './images/history.png', './images/filter.png'],
         currentImageIndex: 0,
-        description: 'Application mobile cross-platform développée avec Flutter pour le suivi d\'entraînements sportifs. Synchronisation en temps réel avec Firebase et fonctionnalités avancées de tracking.',
         technologies: ['Flutter', 'Dart', 'Firebase', 'Provider', 'SQLite', 'Google Maps API'],
         features: [
             'Suivi détaillé des exercices et performances',
@@ -380,7 +378,6 @@ const projectData = {
         title: 'Gestionnaire de Tâches Android',
         images: ['./images/ecran3.png', './images/ecran.png', './images/rahim.jpg'],
         currentImageIndex: 0,
-        description: 'Application Android native pour la gestion de tâches quotidiennes, construite avec Kotlin en suivant l\'architecture MVVM pour une maintenabilité optimale et des performances élevées.',
         technologies: ['Kotlin', 'Room Database', 'MVVM', 'LiveData', 'ViewBinding', 'Material Design'],
         features: [
             'Architecture MVVM propre et maintenable',
