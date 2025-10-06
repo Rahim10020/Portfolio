@@ -672,15 +672,18 @@ function generateProjectsHTML() {
                 project.description.substring(0, 100) + '...' :
                 project.description}
                     </p>
-                    <div class="project-links">
-                        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View on GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        ${project.demo && project.demo.includes('http') ? `
-                            <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View Live Demo">
-                                <i class="fas fa-external-link-alt"></i>
+                    <div class="project-card-footer">
+                        <span class="project-link">View details</span>
+                        <div class="project-links">
+                            <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
                             </a>
-                        ` : ''}
+                            ${project.demo && project.demo.includes('http') ? `
+                                <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View Live Demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
             </div>
