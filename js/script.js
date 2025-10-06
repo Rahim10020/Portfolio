@@ -672,7 +672,19 @@ function generateProjectsHTML() {
                 project.description.substring(0, 100) + '...' :
                 project.description}
                     </p>
-                    <a href="#" onclick="openModal('${projectId}')" class="project-link">View Details</a>
+                    <div class="project-card-footer">
+                        <a href="#" onclick="openModal('${projectId}')" class="project-link">View Details</a>
+                        <div class="project-links">
+                            <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View on GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            ${project.demo && project.demo.includes('http') ? `
+                                <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View Live Demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
                 </div>
             </div>
         `

@@ -664,6 +664,53 @@ h6 {
     color: var(--buttonColor);
 }
 
+/* Project card footer styles */
+.project-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.project-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: var(--mainColor);
+    border: 1px solid var(--borderColor);
+    border-radius: 50%;
+    color: var(--secondaryText);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.project-icon-link:hover {
+    background-color: var(--buttonColor);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: var(--buttonColor);
+}
+
+.project-icon-link i {
+    transition: all 0.3s ease;
+}
+
+.project-icon-link:hover i {
+    transform: scale(1.1);
+}
+
 /* Styles pour le formulaire amélioré */
 #submit-btn {
     margin-top: 10px;
