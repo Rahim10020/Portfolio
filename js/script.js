@@ -495,6 +495,7 @@ function generateProjectsHTML() {
         const projectElement = document.createElement('div')
         projectElement.innerHTML = `
             <div class="post" tabindex="0">
+                <div class="post-main">
                 <div class="project-gallery">
                     <div class="gallery-thumbnails">
                         ${project.images.map((image, index) =>
@@ -524,6 +525,7 @@ function generateProjectsHTML() {
                         </div>
                     </div>
                 </div>
+                </div>
                 <aside class="features-panel" aria-hidden="true">
                     <div class="features-content">
                         <h6 class="features-title">Features</h6>
@@ -549,6 +551,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // Generate projects dynamically
     generateProjectsHTML()
 
+    // After generation, fix card heights
+    requestAnimationFrame(() => {
+        setCardHeights()
+        // Recompute on image loads
+        document.querySelectorAll('.post .main-thumbnail').forEach(img => {
+            if (img.complete) return
+            img.addEventListener('load', setCardHeights, { once: true })
+        })
+    })
+
+    // Recompute on resize
+    window.addEventListener('resize', debounce(setCardHeights, 100))
+
     // Entry animation for title
     const introTitle = document.getElementById('intro')
     if (introTitle) {
@@ -557,3 +572,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 4000)
     }
 })
+
+// Ensure post height matches its main content, so side panel scrolls without stretching
+function setCardHeights() {
+    const posts = document.querySelectorAll('.post')
+    posts.forEach(post => {
+        const main = post.querySelector('.post-main')
+        if (!main) return
+        // Reset height to measure natural height
+        post.style.height = 'auto'
+        // Force reflow then set fixed height to main's height
+        const desiredHeight = main.offsetHeight
+        post.style.height = desiredHeight + 'px'
+    })
+}

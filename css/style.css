@@ -615,6 +615,7 @@ h6 {
     position: relative;
     display: grid;
     grid-template-columns: 1fr; /* Contenu en une colonne par défaut */
+    align-items: stretch; /* étire les enfants sur la hauteur */
 }
 
 .post:hover {
@@ -627,6 +628,9 @@ h6 {
     display: none; /* caché par défaut */
     background: var(--secondaryColor);
     border-left: 1px solid var(--borderColor);
+    height: 100%;
+    min-height: 0; /* permet le scroll interne sans étirer la ligne de grille */
+    overflow: hidden; /* le contenu interne gère le scroll */
 }
 
 .post:hover,
@@ -646,7 +650,14 @@ h6 {
     height: 100%;
     box-sizing: border-box;
     padding: 15px;
-    overflow-y: auto;
+    overflow-y: auto; /* scroll interne */
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.features-content::-webkit-scrollbar {
+    width: 0;
+    height: 0; /* WebKit */
 }
 
 .features-title {
