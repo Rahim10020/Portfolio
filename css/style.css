@@ -610,13 +610,73 @@ h6 {
     -moz-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     transition: all 0.3s ease;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 8px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr; /* Contenu en une colonne par défaut */
 }
 
 .post:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Panneau latéral des features dans le flux (repousse la grille) */
+.features-panel {
+    display: none; /* caché par défaut */
+    background: var(--secondaryColor);
+    border-left: 1px solid var(--borderColor);
+}
+
+.post:hover,
+.post:focus-within {
+    grid-column: span 2; /* la carte occupe 2 colonnes de la grille */
+    grid-template-columns: 1fr 1fr; /* 2 colonnes internes: contenu + panneau */
+}
+
+.post:hover .features-panel,
+.post:focus-within .features-panel {
+    display: block; /* devient visible et prend sa place */
+    grid-column: 2; /* colonne droite */
+    grid-row: 1 / -1; /* s'étend verticalement */
+}
+
+.features-content {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.features-title {
+    margin: 0 0 10px 0;
+    color: var(--mainText);
+}
+
+.features-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.features-list li {
+    margin-bottom: 8px;
+    color: var(--secondaryText);
+    position: relative;
+}
+
+.features-list li::before {
+    content: '▸';
+    position: absolute;
+    left: -18px;
+    color: var(--accent);
+}
+
+/* Empêche le panneau de sortir de l'écran sur les petits écrans */
+@media screen and (max-width: 800px) {
+    .features-panel {
+        display: none;
+    }
 }
 
 .post-title {

@@ -494,7 +494,7 @@ function generateProjectsHTML() {
 
         const projectElement = document.createElement('div')
         projectElement.innerHTML = `
-            <div class="post">
+            <div class="post" tabindex="0">
                 <div class="project-gallery">
                     <div class="gallery-thumbnails">
                         ${project.images.map((image, index) =>
@@ -524,6 +524,14 @@ function generateProjectsHTML() {
                         </div>
                     </div>
                 </div>
+                <aside class="features-panel" aria-hidden="true">
+                    <div class="features-content">
+                        <h6 class="features-title">Features</h6>
+                        <ul class="features-list">
+                            ${project.features.map(feat => `<li>${feat}</li>`).join('')}
+                        </ul>
+                    </div>
+                </aside>
             </div>
         `
 
