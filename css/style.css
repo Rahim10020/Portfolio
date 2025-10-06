@@ -542,7 +542,8 @@ h6 {
 }
 
 .post-wrapper {
-    display: flex; /* flex pour animer la largeur des cartes en douceur */
+    display: flex;
+    /* flex pour animer la largeur des cartes en douceur */
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
@@ -609,15 +610,13 @@ h6 {
     -webkit-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
-    transition: box-shadow 0.3s ease, transform 0.3s ease, width 0.35s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     overflow: visible;
     border-radius: 8px;
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr; /* Contenu en une colonne par défaut */
-    transition: grid-template-columns 0.35s ease;
-    align-items: stretch; /* étire les enfants sur la hauteur */
-    width: 320px; /* largeur de base d'une carte */
+    width: 320px;
+    /* largeur de base d'une carte */
+    cursor: pointer;
 }
 
 .post:hover {
@@ -625,42 +624,52 @@ h6 {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Panneau latéral des features dans le flux (repousse via flex) */
+/* Features panel - now positioned absolutely to overlay on target cards */
 .features-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: var(--secondaryColor);
-    border-left: 1px solid var(--borderColor);
-    height: 100%;
-    min-height: 0; /* permet le scroll interne sans étirer la ligne */
-    overflow: hidden; /* le contenu interne gère le scroll */
+    border: 1px solid var(--borderColor);
+    border-radius: 8px;
     opacity: 0;
-    max-width: 0; /* caché visuellement mais pris en compte dans la grille interne */
-    transition: opacity 0.35s ease, max-width 0.35s ease;
+    visibility: hidden;
+    z-index: 10;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.post:hover,
-.post:focus-within {
-    width: 660px; /* 320*2 + gap (20) pour occuper visuellement 2 colonnes */
-    grid-template-columns: 1fr 1fr; /* 2 colonnes internes: contenu + panneau */
-}
-
-.post:hover .features-panel,
-.post:focus-within .features-panel {
+.post.target-card .features-panel {
     opacity: 1;
-    max-width: 100%;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.post.target-card {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 5;
 }
 
 .features-content {
     height: 100%;
     box-sizing: border-box;
-    padding: 15px;
-    overflow-y: auto; /* scroll interne */
-    -ms-overflow-style: none; /* IE/Edge */
-    scrollbar-width: none; /* Firefox */
+    padding: 20px;
+    overflow-y: auto;
+    /* scroll interne */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .features-content::-webkit-scrollbar {
     width: 0;
-    height: 0; /* WebKit */
+    height: 0;
+    /* WebKit */
 }
 
 .features-title {

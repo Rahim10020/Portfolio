@@ -551,18 +551,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Generate projects dynamically
     generateProjectsHTML()
 
-    // After generation, fix card heights
-    requestAnimationFrame(() => {
-        setCardHeights()
-        // Recompute on image loads
-        document.querySelectorAll('.post .main-thumbnail').forEach(img => {
-            if (img.complete) return
-            img.addEventListener('load', setCardHeights, { once: true })
-        })
-    })
-
-    // Recompute on resize
-    window.addEventListener('resize', debounce(setCardHeights, 100))
+    // Initialize hover behavior for project cards
+    initializeProjectCardHovers()
 
     // Entry animation for title
     const introTitle = document.getElementById('intro')
@@ -573,16 +563,66 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 })
 
-// Ensure post height matches its main content, so side panel scrolls without stretching
-function setCardHeights() {
+// ===========================================
+// PROJECT CARD HOVER BEHAVIOR
+// ===========================================
+
+function initializeProjectCardHovers() {
     const posts = document.querySelectorAll('.post')
-    posts.forEach(post => {
-        const main = post.querySelector('.post-main')
-        if (!main) return
-        // Reset height to measure natural height
-        post.style.height = 'auto'
-        // Force reflow then set fixed height to main's height
-        const desiredHeight = main.offsetHeight
-        post.style.height = desiredHeight + 'px'
+    if (posts.length === 0) return
+
+    posts.forEach((post, index) => {
+        post.addEventListener('mouseenter', () => {
+            handleCardHover(post, index, posts.length)
+        })
+
+        post.addEventListener('mouseleave', () => {
+            handleCardLeave(post, index, posts.length)
+        })
+    })
+}
+
+function handleCardHover(hoveredPost, hoveredIndex, totalCards) {
+    // Remove any existing target cards
+    document.querySelectorAll('.post.target-card').forEach(card => {
+        card.classList.remove('target-card')
+    })
+
+    // Determine target card based on hover position
+    let targetIndex = -1
+
+    if (hoveredIndex === 0) {
+        // First card -> target middle card (index 1)
+        targetIndex = 1
+    } else if (hoveredIndex === Math.floor(totalCards / 2)) {
+        // Middle card -> target next card (could be index 2)
+        targetIndex = Math.min(hoveredIndex + 1, totalCards - 1)
+    } else if (hoveredIndex === totalCards - 1) {
+        // Last card -> target middle card (index 1)
+        targetIndex = 1
+    }
+
+    // Apply target styling and show features if target exists
+    if (targetIndex !== -1 && targetIndex < totalCards) {
+        const targetCard = document.querySelectorAll('.post')[targetIndex]
+        if (targetCard) {
+            targetCard.classList.add('target-card')
+
+            // Copy features from hovered card to target card
+            const hoveredFeatures = hoveredPost.querySelector('.features-panel')
+            const targetFeaturesPanel = targetCard.querySelector('.features-panel')
+
+            if (hoveredFeatures && targetFeaturesPanel) {
+                const featuresContent = hoveredFeatures.innerHTML
+                targetFeaturesPanel.innerHTML = featuresContent
+            }
+        }
+    }
+}
+
+function handleCardLeave(hoveredPost, hoveredIndex, totalCards) {
+    // Remove target card styling
+    document.querySelectorAll('.post.target-card').forEach(card => {
+        card.classList.remove('target-card')
     })
 }
