@@ -542,8 +542,8 @@ h6 {
 }
 
 .post-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 320px);
+    display: flex; /* flex pour animer la largeur des cartes en douceur */
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     padding-bottom: 50px;
@@ -609,13 +609,15 @@ h6 {
     -webkit-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 15px -11px rgba(0, 0, 0, 0.75);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, width 0.35s ease;
     overflow: visible;
     border-radius: 8px;
     position: relative;
     display: grid;
     grid-template-columns: 1fr; /* Contenu en une colonne par défaut */
+    transition: grid-template-columns 0.35s ease;
     align-items: stretch; /* étire les enfants sur la hauteur */
+    width: 320px; /* largeur de base d'une carte */
 }
 
 .post:hover {
@@ -623,27 +625,28 @@ h6 {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Panneau latéral des features dans le flux (repousse la grille) */
+/* Panneau latéral des features dans le flux (repousse via flex) */
 .features-panel {
-    display: none; /* caché par défaut */
     background: var(--secondaryColor);
     border-left: 1px solid var(--borderColor);
     height: 100%;
-    min-height: 0; /* permet le scroll interne sans étirer la ligne de grille */
+    min-height: 0; /* permet le scroll interne sans étirer la ligne */
     overflow: hidden; /* le contenu interne gère le scroll */
+    opacity: 0;
+    max-width: 0; /* caché visuellement mais pris en compte dans la grille interne */
+    transition: opacity 0.35s ease, max-width 0.35s ease;
 }
 
 .post:hover,
 .post:focus-within {
-    grid-column: span 2; /* la carte occupe 2 colonnes de la grille */
+    width: 660px; /* 320*2 + gap (20) pour occuper visuellement 2 colonnes */
     grid-template-columns: 1fr 1fr; /* 2 colonnes internes: contenu + panneau */
 }
 
 .post:hover .features-panel,
 .post:focus-within .features-panel {
-    display: block; /* devient visible et prend sa place */
-    grid-column: 2; /* colonne droite */
-    grid-row: 1 / -1; /* s'étend verticalement */
+    opacity: 1;
+    max-width: 100%;
 }
 
 .features-content {
