@@ -664,20 +664,15 @@ h6 {
     color: var(--buttonColor);
 }
 
-/* Project card footer styles */
-.project-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #f0f0f0;
-}
-
+/* Project links styles */
 .project-links {
     display: flex;
     gap: 10px;
     align-items: center;
+    justify-content: flex-end;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
 }
 
 .project-icon-link {
