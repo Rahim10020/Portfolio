@@ -513,11 +513,6 @@ function generateProjectsHTML() {
                     <div class="tech-stack">
                         ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                     </div>
-                    <p class="post-intro">
-                        ${project.description.length > 100 ?
-                project.description.substring(0, 100) + '...' :
-                project.description}
-                    </p>
                     <div class="project-card-footer">
                         <span class="project-link">View details</span>
                         <div class="project-links">
