@@ -695,10 +695,87 @@ h6 {
     color: var(--accent);
 }
 
+/* Arrow connectors between project cards and features panels */
+.arrow-connector {
+    position: fixed !important;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.arrow-line {
+    stroke: var(--accent);
+    stroke-width: 4;
+    fill: none;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.arrow-head {
+    fill: var(--accent);
+    stroke: var(--accent);
+    stroke-width: 1;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.post.target-card .arrow-connector {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Different arrow styles for different positions */
+.arrow-left-to-right {
+    transform: scaleX(-1);
+}
+
+.arrow-right-to-left {
+    transform: scaleX(1);
+}
+
+.arrow-top-to-bottom {
+    transform: rotate(90deg);
+}
+
+.arrow-bottom-to-top {
+    transform: rotate(-90deg);
+}
+
+/* Responsive arrow adjustments */
+@media screen and (max-width: 1200px) {
+    .arrow-line {
+        stroke-width: 2.5;
+    }
+
+    .arrow-head {
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .arrow-connector {
+        opacity: 0.8;
+    }
+
+    .arrow-line {
+        stroke-width: 2;
+    }
+}
+
 /* Empêche le panneau de sortir de l'écran sur les petits écrans */
 @media screen and (max-width: 800px) {
     .features-panel {
         display: none;
+    }
+
+    .arrow-connector {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .arrow-connector {
+        opacity: 0.6;
     }
 }
 

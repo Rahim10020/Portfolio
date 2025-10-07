@@ -343,16 +343,6 @@ const projectData = {
         images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
         currentImageIndex: 0,
         technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript', 'Stripe API', 'Redis'],
-        features: [
-            'Interface d\'administration complète pour la gestion des produits',
-            'Système de panier avec gestion des sessions',
-            'Authentification et profils utilisateurs',
-            'Intégration de paiement sécurisé avec Stripe',
-            'Gestion des stocks en temps réel',
-            'Système de recommandations basé sur l\'historique',
-            'Design responsive et optimisé mobile',
-            'Système de reviews et ratings'
-        ],
         github: 'https://github.com/votre-username/ecommerce-django',
         demo: 'https://votre-demo-ecommerce.com'
     },
@@ -361,16 +351,6 @@ const projectData = {
         images: ['./images/ecran2.png', './images/history.png', './images/filter.png'],
         currentImageIndex: 0,
         technologies: ['Flutter', 'Dart', 'Firebase', 'Provider', 'SQLite', 'Google Maps API'],
-        features: [
-            'Suivi détaillé des exercices et performances',
-            'Synchronisation cloud en temps réel avec Firebase',
-            'Interface intuitive et moderne avec Material Design',
-            'Mode hors-ligne avec synchronisation automatique',
-            'Statistiques et graphiques de progression',
-            'Géolocalisation pour le tracking des courses',
-            'Notifications push personnalisées',
-            'Partage social des performances'
-        ],
         github: 'https://github.com/votre-username/fitness-flutter',
         demo: 'https://play.google.com/store/apps/details?id=com.votreapp.fitness'
     },
@@ -379,16 +359,6 @@ const projectData = {
         images: ['./images/ecran3.png', './images/ecran.png', './images/rahim.jpg'],
         currentImageIndex: 0,
         technologies: ['Kotlin', 'Room Database', 'MVVM', 'LiveData', 'ViewBinding', 'Material Design'],
-        features: [
-            'Architecture MVVM propre et maintenable',
-            'Base de données locale Room pour la persistence',
-            'Interface Material Design moderne',
-            'Notifications push intelligentes',
-            'Organisation par catégories et priorités',
-            'Recherche et filtrage avancés',
-            'Mode sombre et personnalisation',
-            'Widgets pour l\'écran d\'accueil'
-        ],
         github: 'https://github.com/votre-username/task-manager-kotlin',
         demo: 'https://play.google.com/store/apps/details?id=com.votreapp.tasks'
     }
@@ -478,6 +448,13 @@ const debouncedScrollHandler = debounce(() => {
 
 window.addEventListener('scroll', debouncedScrollHandler)
 
+// Window resize handler for arrows
+const debouncedResizeHandler = debounce(() => {
+    updateArrowPositions()
+}, 100)
+
+window.addEventListener('resize', debouncedResizeHandler)
+
 // ===========================================
 // DYNAMIC PROJECT GENERATION
 // ===========================================
@@ -494,7 +471,7 @@ function generateProjectsHTML() {
 
         const projectElement = document.createElement('div')
         projectElement.innerHTML = `
-            <div class="post" tabindex="0">
+            <div class="post" id="project-${projectId}" tabindex="0">
                 <div class="post-main">
                 <div class="project-gallery">
                     <div class="gallery-thumbnails">
@@ -526,14 +503,6 @@ function generateProjectsHTML() {
                     </div>
                 </div>
                 </div>
-                <aside class="features-panel" aria-hidden="true">
-                    <div class="features-content">
-                        <h6 class="features-title">Features</h6>
-                        <ul class="features-list">
-                            ${project.features.map(feat => `<li>${feat}</li>`).join('')}
-                        </ul>
-                    </div>
-                </aside>
             </div>
         `
 
@@ -554,6 +523,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize hover behavior for project cards
     initializeProjectCardHovers()
 
+    // Test arrow creation after a short delay
+    setTimeout(() => {
+        const posts = document.querySelectorAll('.post')
+        if (posts.length >= 2) {
+            console.log('Testing arrow creation between first two cards')
+            createArrowConnector(posts[0], posts[1], 'curved')
+            setTimeout(() => {
+                const testArrow = document.querySelector('.arrow-connector')
+                if (testArrow) {
+                    testArrow.style.opacity = '1'
+                    testArrow.style.visibility = 'visible'
+                    console.log('Test arrow made visible')
+                }
+            }, 1000)
+        }
+    }, 2000)
+
     // Entry animation for title
     const introTitle = document.getElementById('intro')
     if (introTitle) {
@@ -562,6 +548,164 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 4000)
     }
 })
+
+// ===========================================
+// ARROW CONNECTOR FUNCTIONS
+// ===========================================
+
+function createArrowConnector(fromElement, toElement, arrowType = 'curved') {
+    console.log('Creating arrow from:', fromElement.id, 'to:', toElement.id)
+
+    // Remove any existing arrow for this connection
+    const fromId = fromElement.id || fromElement.className || 'unknown';
+    const existingArrow = document.querySelector('.arrow-connector[data-from="' + fromId + '"]');
+    if (existingArrow) {
+        existingArrow.remove();
+    }
+
+    const fromRect = fromElement.getBoundingClientRect();
+    const toRect = toElement.getBoundingClientRect();
+
+    console.log('Element positions:', {
+        from: { x: fromRect.left, y: fromRect.top, width: fromRect.width, height: fromRect.height },
+        to: { x: toRect.left, y: toRect.top, width: toRect.width, height: toRect.height }
+    })
+
+    // Calculate positions relative to the viewport
+    const fromCenterX = fromRect.left + fromRect.width / 2;
+    const fromCenterY = fromRect.top + fromRect.height / 2;
+    const toCenterX = toRect.left + toRect.width / 2;
+    const toCenterY = toRect.top + toRect.height / 2;
+
+    console.log('Center positions:', { fromCenterX, fromCenterY, toCenterX, toCenterY })
+
+    // Calculate the angle and distance between centers
+    const deltaX = toCenterX - fromCenterX;
+    const deltaY = toCenterY - fromCenterY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    console.log('Delta and distance:', { deltaX, deltaY, distance })
+
+    // Avoid division by zero
+    if (distance === 0) {
+        console.log('Distance is 0, returning null')
+        return null;
+    }
+
+    const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+    console.log('Calculated angle:', angle)
+
+    // Create SVG arrow
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.classList.add('arrow-connector');
+    svg.setAttribute('data-from', fromId);
+    svg.setAttribute('data-to', toElement.id || toElement.className || 'unknown');
+
+    // Set SVG dimensions to cover the connection area with adequate margin
+    const margin = Math.max(60, distance * 0.2);
+    const svgWidth = Math.abs(deltaX) + margin * 2;
+    const svgHeight = Math.abs(deltaY) + margin * 2;
+    svg.setAttribute('width', Math.max(svgWidth, 100));
+    svg.setAttribute('height', Math.max(svgHeight, 100));
+
+    // Position SVG to cover the connection area
+    svg.style.position = 'fixed';
+    svg.style.left = (Math.min(fromCenterX, toCenterX) - margin) + 'px';
+    svg.style.top = (Math.min(fromCenterY, toCenterY) - margin) + 'px';
+    svg.style.zIndex = '1';
+    svg.style.pointerEvents = 'none';
+
+    if (arrowType === 'curved') {
+        // Create curved path with improved control point calculation
+        const controlPointOffset = Math.min(distance * 0.4, 150); // Limit curve intensity
+        const controlX = (fromCenterX + toCenterX) / 2 + controlPointOffset * Math.sin((angle + 90) * Math.PI / 180);
+        const controlY = (fromCenterY + toCenterY) / 2 + controlPointOffset * Math.cos((angle + 90) * Math.PI / 180);
+
+        const pathData = `M ${fromCenterX - svg.offsetLeft},${fromCenterY - svg.offsetTop}
+                         Q ${controlX - svg.offsetLeft},${controlY - svg.offsetTop}
+                         ${toCenterX - svg.offsetLeft},${toCenterY - svg.offsetTop}`;
+
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute('d', pathData);
+        path.classList.add('arrow-line');
+        svg.appendChild(path);
+
+        // Add arrow head at the end with improved positioning
+        const arrowHead = document.createElementNS(svgNS, "polygon");
+        const headSize = Math.max(8, Math.min(15, distance * 0.05));
+        const headAngle = 20;
+
+        // Calculate arrow head position along the path direction
+        const endAngle = angle;
+        const headPoint1X = toCenterX - svg.offsetLeft - headSize * Math.cos((endAngle - headAngle) * Math.PI / 180);
+        const headPoint1Y = toCenterY - svg.offsetTop - headSize * Math.sin((endAngle - headAngle) * Math.PI / 180);
+        const headPoint2X = toCenterX - svg.offsetLeft - headSize * Math.cos((endAngle + headAngle) * Math.PI / 180);
+        const headPoint2Y = toCenterY - svg.offsetTop - headSize * Math.sin((endAngle + headAngle) * Math.PI / 180);
+
+        arrowHead.setAttribute('points',
+            `${toCenterX - svg.offsetLeft},${toCenterY - svg.offsetTop} ${headPoint1X},${headPoint1Y} ${headPoint2X},${headPoint2Y}`);
+        arrowHead.classList.add('arrow-head');
+        svg.appendChild(arrowHead);
+
+    } else {
+        // Create straight line with arrow head
+        const line = document.createElementNS(svgNS, "line");
+        line.setAttribute('x1', fromCenterX - svg.offsetLeft);
+        line.setAttribute('y1', fromCenterY - svg.offsetTop);
+        line.setAttribute('x2', toCenterX - svg.offsetLeft);
+        line.setAttribute('y2', toCenterY - svg.offsetTop);
+        line.classList.add('arrow-line');
+        svg.appendChild(line);
+
+        // Add arrow head
+        const arrowHead = document.createElementNS(svgNS, "polygon");
+        const headSize = 10;
+        const headAngle = 30;
+
+        const headPoint1X = toCenterX - svg.offsetLeft - headSize * Math.cos((angle - headAngle) * Math.PI / 180);
+        const headPoint1Y = toCenterY - svg.offsetTop - headSize * Math.sin((angle - headAngle) * Math.PI / 180);
+        const headPoint2X = toCenterX - svg.offsetLeft - headSize * Math.cos((angle + headAngle) * Math.PI / 180);
+        const headPoint2Y = toCenterY - svg.offsetTop - headSize * Math.sin((angle + headAngle) * Math.PI / 180);
+
+        arrowHead.setAttribute('points',
+            `${toCenterX - svg.offsetLeft},${toCenterY - svg.offsetTop} ${headPoint1X},${headPoint1Y} ${headPoint2X},${headPoint2Y}`);
+        arrowHead.classList.add('arrow-head');
+        svg.appendChild(arrowHead);
+    }
+
+    // Append to body
+    document.body.appendChild(svg);
+    console.log('Arrow SVG appended to body:', svg)
+    console.log('Arrow SVG outerHTML:', svg.outerHTML)
+    return svg;
+}
+
+function removeArrowConnector(fromElement) {
+    const arrow = document.querySelector('.arrow-connector[data-from="' + (fromElement.id || 'unknown') + '"]');
+    if (arrow) {
+        arrow.remove();
+    }
+}
+
+function updateArrowPositions() {
+    // Update positions of all existing arrows when window is resized
+    const arrows = document.querySelectorAll('.arrow-connector');
+    arrows.forEach(arrow => {
+        const fromId = arrow.getAttribute('data-from');
+        const toId = arrow.getAttribute('data-to');
+
+        if (fromId && toId) {
+            const fromElement = document.getElementById(fromId) || document.querySelector(`[data-project-id="${fromId}"]`);
+            const toElement = document.getElementById(toId) || document.querySelector(`[data-project-id="${toId}"]`);
+
+            if (fromElement && toElement) {
+                arrow.remove();
+                createArrowConnector(fromElement, toElement);
+            }
+        }
+    });
+}
 
 // ===========================================
 // PROJECT CARD HOVER BEHAVIOR
@@ -583,9 +727,14 @@ function initializeProjectCardHovers() {
 }
 
 function handleCardHover(hoveredPost, hoveredIndex, totalCards) {
-    // Remove any existing target cards
+    console.log('Card hover triggered:', hoveredIndex, 'Total cards:', totalCards)
+
+    // Remove any existing target cards and arrows
     document.querySelectorAll('.post.target-card').forEach(card => {
         card.classList.remove('target-card')
+    })
+    document.querySelectorAll('.arrow-connector').forEach(arrow => {
+        arrow.remove()
     })
 
     // Determine target card based on hover position
@@ -602,27 +751,32 @@ function handleCardHover(hoveredPost, hoveredIndex, totalCards) {
         targetIndex = 1
     }
 
+    console.log('Target index:', targetIndex)
+
     // Apply target styling and show features if target exists
     if (targetIndex !== -1 && targetIndex < totalCards) {
         const targetCard = document.querySelectorAll('.post')[targetIndex]
         if (targetCard) {
+            console.log('Target card found, adding target-card class')
             targetCard.classList.add('target-card')
 
-            // Copy features from hovered card to target card
-            const hoveredFeatures = hoveredPost.querySelector('.features-panel')
-            const targetFeaturesPanel = targetCard.querySelector('.features-panel')
-
-            if (hoveredFeatures && targetFeaturesPanel) {
-                const featuresContent = hoveredFeatures.innerHTML
-                targetFeaturesPanel.innerHTML = featuresContent
-            }
+            // Create arrow connector between hovered card and target card
+            const arrow = createArrowConnector(hoveredPost, targetCard, 'curved')
+            console.log('Arrow created:', arrow)
+        } else {
+            console.log('Target card not found')
         }
     }
 }
 
 function handleCardLeave(hoveredPost, hoveredIndex, totalCards) {
-    // Remove target card styling
+    // Remove target card styling and arrows
     document.querySelectorAll('.post.target-card').forEach(card => {
         card.classList.remove('target-card')
+    })
+
+    // Remove all arrows
+    document.querySelectorAll('.arrow-connector').forEach(arrow => {
+        arrow.remove()
     })
 }
