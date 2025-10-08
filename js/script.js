@@ -371,12 +371,12 @@ const projectData = {
         title: 'Essence Togo',
         description: 'Essence Togo is a Kotlin mobile app built with Jetpack Compose that helps users quickly find nearby gas stations on a map. Fast, simple, and user-friendly.',
         longDescription: 'Essence Togo is a Kotlin mobile app built with Jetpack Compose that helps users quickly find nearby gas stations on a map. Whether you\'re traveling in an unfamiliar area or simply looking for the closest station, Essence Togo provides a reliable solution with its clean Material Design 3 interface and efficient geolocation features. The app automatically sorts stations by proximity, updates distances in real-time as you move, and integrates seamlessly with Google Maps for turn-by-turn navigation to your selected station.',
-        images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
+        images: ['./images/accueil.png', './images/detail.png', './images/filter.png', './images/history.png', './images/map.png',],
         currentImageIndex: 0,
         technologies: ['Kotlin', 'Jetpack compose', 'Firebase', 'Android'],
-        github: 'https://github.com/votre-username/ecommerce-django',
+        github: 'https://github.com/Rahim10020/essence-togo',
         demo: 'https://votre-demo-ecommerce.com',
-        features: ['Product Catalog', 'Shopping Cart', 'Payment Integration', 'Admin Dashboard', 'User Authentication', 'Inventory Management']
+        features: ['Station Locator: Find gas stations closest to your current position', 'Geolocation: Automatic distance calculation from your current location', 'Advanced Search: Search by station name or address', ' History: View your recently visited stations', 'Modern Interface: Modern design with Material Design 3', 'Real-time: Data synchronized in real-time with Firebase']
     },
     project2: {
         title: 'Fitness Mobile App',
