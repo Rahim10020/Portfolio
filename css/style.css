@@ -808,6 +808,17 @@ h6 {
     line-height: 1.5;
 }
 
+.post-description {
+    color: var(--secondaryText);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* Nouveaux styles pour les tags technologiques */
 .tech-stack {
     display: flex;
@@ -1235,6 +1246,172 @@ h6 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Enhanced Modal Styles for Project Details */
+.modal-project {
+    padding: 40px;
+}
+
+.modal-header {
+    margin-bottom: 30px;
+}
+
+.modal-header h2 {
+    margin-bottom: 20px;
+    color: var(--mainText);
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.modal-gallery {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.modal-gallery-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modal-thumbnail {
+    width: 80px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.modal-thumbnail:hover,
+.modal-thumbnail.active {
+    opacity: 1;
+    border-color: var(--accent);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(23, 162, 184, 0.5);
+}
+
+.modal-main-image {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    background-color: var(--mainColor);
+    padding: 20px;
+}
+
+.modal-content-body {
+    display: grid;
+    gap: 25px;
+}
+
+.modal-description,
+.modal-features,
+.modal-technologies,
+.modal-links {
+    background-color: var(--mainColor);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--borderColor);
+}
+
+.modal-description h3,
+.modal-features h3,
+.modal-technologies h3,
+.modal-links h3 {
+    margin: 0 0 15px 0;
+    color: var(--mainText);
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 8px;
+}
+
+.modal-description p {
+    line-height: 1.7;
+    font-size: 16px;
+    color: var(--secondaryText);
+    margin: 0;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    color: var(--secondaryText);
+    line-height: 1.6;
+}
+
+.features-list li::before {
+    content: '✓';
+    color: var(--success);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.tech-stack-modal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-tag-modal {
+    background-color: var(--accent);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tech-tag-modal:hover {
+    background-color: var(--buttonColor);
+    transform: scale(1.05);
+}
+
+.modal-project-links {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-link-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: var(--buttonColor);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    flex: 1;
+    justify-content: center;
+}
+
+.modal-link-btn:hover {
+    background-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-link-btn i {
+    font-size: 16px;
+}
+
 /* Media Queries */
 @media screen and (max-width: 1200px) {
     .main-container {
@@ -1283,6 +1460,33 @@ h6 {
 
     .modal-links {
         flex-direction: column;
+    }
+
+    .modal-project {
+        padding: 25px;
+    }
+
+    .modal-header h2 {
+        font-size: 28px;
+    }
+
+    .modal-main-image {
+        height: 250px;
+        padding: 15px;
+    }
+
+    .modal-gallery-thumbnails {
+        gap: 8px;
+    }
+
+    .modal-thumbnail {
+        width: 70px;
+        height: 50px;
+    }
+
+    .modal-project-links {
+        flex-direction: column;
+        gap: 10px;
     }
 
     .gallery-thumbnails {

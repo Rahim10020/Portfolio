@@ -368,28 +368,37 @@ function isValidEmail(email) {
 // Project data
 const projectData = {
     project1: {
-        title: 'Plateforme E-commerce Django',
+        title: 'Essence Togo',
+        description: 'E-commerce platform built with Django for local businesses in Togo. Features include product catalog, shopping cart, payment integration with Stripe, user authentication, and admin dashboard for inventory management.',
+        longDescription: 'Essence Togo is a comprehensive e-commerce solution designed specifically for the Togolese market. Built with Django and Python, it provides a robust platform for local businesses to showcase and sell their products online. The application includes advanced features such as real-time inventory tracking, secure payment processing through Stripe API, user-friendly admin interface, and responsive design that works seamlessly across all devices.',
         images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
         currentImageIndex: 0,
         technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript', 'Stripe API', 'Redis'],
         github: 'https://github.com/votre-username/ecommerce-django',
-        demo: 'https://votre-demo-ecommerce.com'
+        demo: 'https://votre-demo-ecommerce.com',
+        features: ['Product Catalog', 'Shopping Cart', 'Payment Integration', 'Admin Dashboard', 'User Authentication', 'Inventory Management']
     },
     project2: {
-        title: 'Application Mobile de Fitness',
+        title: 'Fitness Mobile App',
+        description: 'Cross-platform fitness application built with Flutter, featuring workout tracking, progress monitoring, and social features for fitness enthusiasts.',
+        longDescription: 'A comprehensive fitness companion app that helps users track their workouts, monitor progress, and stay motivated. Built with Flutter and Dart, this app provides personalized workout plans, exercise demonstrations, progress analytics, and social features to connect with other fitness enthusiasts. The app integrates with Firebase for real-time data synchronization and uses SQLite for offline functionality.',
         images: ['./images/ecran2.png', './images/history.png', './images/filter.png'],
         currentImageIndex: 0,
         technologies: ['Flutter', 'Dart', 'Firebase', 'Provider', 'SQLite', 'Google Maps API'],
         github: 'https://github.com/votre-username/fitness-flutter',
-        demo: 'https://play.google.com/store/apps/details?id=com.votreapp.fitness'
+        demo: 'https://play.google.com/store/apps/details?id=com.votreapp.fitness',
+        features: ['Workout Tracking', 'Progress Analytics', 'Exercise Library', 'Social Features', 'Offline Mode', 'GPS Tracking']
     },
     project3: {
-        title: 'Gestionnaire de Tâches Android',
+        title: 'Android Task Manager',
+        description: 'Modern task management application for Android built with Kotlin, featuring MVVM architecture, offline capabilities, and intuitive user interface.',
+        longDescription: 'A powerful and intuitive task management application designed for productivity enthusiasts. Built using Kotlin and following MVVM architecture patterns, this app provides seamless task organization, priority management, deadline tracking, and collaborative features. The app uses Room Database for local storage and implements Material Design principles for a modern user experience.',
         images: ['./images/ecran3.png', './images/ecran.png', './images/rahim.jpg'],
         currentImageIndex: 0,
         technologies: ['Kotlin', 'Room Database', 'MVVM', 'LiveData', 'ViewBinding', 'Material Design'],
         github: 'https://github.com/votre-username/task-manager-kotlin',
-        demo: 'https://play.google.com/store/apps/details?id=com.votreapp.tasks'
+        demo: 'https://play.google.com/store/apps/details?id=com.votreapp.tasks',
+        features: ['Task Organization', 'Priority Management', 'Deadline Tracking', 'Offline Mode', 'Data Synchronization', 'Intuitive UI']
     }
 }
 
@@ -420,6 +429,108 @@ function changeMainImage(clickedThumbnail, projectId) {
                 thumb.classList.remove('active')
             }
         })
+    }
+}
+
+// Function to open project modal with detailed information
+function openProjectModal(projectId) {
+    const project = projectData[projectId]
+    if (!project) return
+
+    const modalBody = document.getElementById('modal-body')
+    if (!modalBody) return
+
+    modalBody.innerHTML = `
+        <div class="modal-project">
+            <div class="modal-header">
+                <h2>${project.title}</h2>
+                <div class="modal-gallery">
+                    <div class="modal-gallery-thumbnails">
+                        ${project.images.map((image, index) =>
+        `<img class="modal-thumbnail ${index === 0 ? 'active' : ''}" src="${image}"
+                                  alt="Screenshot ${index + 1} of project ${project.title}"
+                                  onclick="changeModalImage('${projectId}', ${index})" />`
+    ).join('')}
+                    </div>
+                    <img class="modal-main-image" src="${project.images[0]}" alt="Main screenshot of project ${project.title}" />
+                </div>
+            </div>
+
+            <div class="modal-content-body">
+                <div class="modal-description">
+                    <h3>Description</h3>
+                    <p>${project.longDescription || project.description}</p>
+                </div>
+
+                <div class="modal-features">
+                    <h3>Key Features</h3>
+                    <ul class="features-list">
+                        ${project.features ? project.features.map(feature => `<li>${feature}</li>`).join('') : ''}
+                    </ul>
+                </div>
+
+                <div class="modal-technologies">
+                    <h3>Technologies Used</h3>
+                    <div class="tech-stack-modal">
+                        ${project.technologies.map(tech => `<span class="tech-tag-modal">${tech}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="modal-links">
+                    <h3>Project Links</h3>
+                    <div class="modal-project-links">
+                        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
+                            <i class="fab fa-github"></i>
+                            View Source Code
+                        </a>
+                        ${project.demo && project.demo.includes('http') ? `
+                            <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
+
+    // Show modal
+    const modalOverlay = document.getElementById('modal-overlay')
+    if (modalOverlay) {
+        modalOverlay.style.display = 'flex'
+        document.body.style.overflow = 'hidden' // Prevent background scrolling
+    }
+}
+
+// Function to change main image in modal
+function changeModalImage(projectId, imageIndex) {
+    const project = projectData[projectId]
+    if (!project || !project.images[imageIndex]) return
+
+    // Update main image
+    const modalMainImage = document.querySelector('.modal-main-image')
+    if (modalMainImage) {
+        modalMainImage.src = project.images[imageIndex]
+    }
+
+    // Update active classes for thumbnails
+    const thumbnails = document.querySelectorAll('.modal-thumbnail')
+    thumbnails.forEach((thumb, index) => {
+        if (index === imageIndex) {
+            thumb.classList.add('active')
+        } else {
+            thumb.classList.remove('active')
+        }
+    })
+}
+
+// Function to close project modal
+function closeModal() {
+    const modalOverlay = document.getElementById('modal-overlay')
+    if (modalOverlay) {
+        modalOverlay.style.display = 'none'
+        document.body.style.overflow = 'auto' // Restore background scrolling
     }
 }
 
@@ -514,11 +625,12 @@ function generateProjectsHTML() {
                 </div>
                 <div class="post-preview">
                     <h6 class="post-title">${project.title}</h6>
+                    <p class="post-description">${project.description}</p>
                     <div class="tech-stack">
                         ${project.technologies.slice(0, 3).map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                     </div>
                     <div class="project-card-footer">
-                        <span class="project-link">View details</span>
+                        <span class="project-link" onclick="openProjectModal('${projectId}')">View details</span>
                         <div class="project-links">
                             <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-icon-link" title="View on GitHub">
                                 <i class="fab fa-github"></i>
