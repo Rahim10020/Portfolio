@@ -1,0 +1,3 @@
+- ajouter mes autres projets
+- regler le souci du hover
+- agrandir chaque image de mes carte de projets au survol style alibaba.
