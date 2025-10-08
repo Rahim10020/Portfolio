@@ -99,6 +99,35 @@ function setTheme(mode) {
     }
 
     localStorage.setItem('theme', mode)
+
+    // Update social image based on theme
+    updateSocialImage(mode)
+}
+
+function updateSocialImage(mode) {
+    const socialImage = document.getElementById('social-image')
+    if (!socialImage) return
+
+    let imagePath = './images/portfolio-enhanced-normal.png' // default fallback
+
+    switch (mode) {
+        case 'light':
+            imagePath = './images/portfolio.png'
+            break
+        case 'blue':
+            imagePath = './images/portfolio-blue.png'
+            break
+        case 'green':
+            imagePath = './images/portfolio-green.png'
+            break
+        case 'purple':
+            imagePath = './images/portfolio-purple.png'
+            break
+        default:
+            imagePath = './images/portfolio.png'
+    }
+
+    socialImage.src = imagePath
 }
 
 // ===========================================
