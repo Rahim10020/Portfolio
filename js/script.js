@@ -369,11 +369,11 @@ function isValidEmail(email) {
 const projectData = {
     project1: {
         title: 'Essence Togo',
-        description: 'E-commerce platform built with Django for local businesses in Togo. Features include product catalog, shopping cart, payment integration with Stripe, user authentication, and admin dashboard for inventory management.',
-        longDescription: 'Essence Togo is a comprehensive e-commerce solution designed specifically for the Togolese market. Built with Django and Python, it provides a robust platform for local businesses to showcase and sell their products online. The application includes advanced features such as real-time inventory tracking, secure payment processing through Stripe API, user-friendly admin interface, and responsive design that works seamlessly across all devices.',
+        description: 'Essence Togo is a Kotlin mobile app built with Jetpack Compose that helps users quickly find nearby gas stations on a map. Fast, simple, and user-friendly.',
+        longDescription: 'Essence Togo is a Kotlin mobile app built with Jetpack Compose that helps users quickly find nearby gas stations on a map. Whether you\'re traveling in an unfamiliar area or simply looking for the closest station, Essence Togo provides a reliable solution with its clean Material Design 3 interface and efficient geolocation features. The app automatically sorts stations by proximity, updates distances in real-time as you move, and integrates seamlessly with Google Maps for turn-by-turn navigation to your selected station.',
         images: ['./images/ecran1.png', './images/detail.png', './images/accueil.png'],
         currentImageIndex: 0,
-        technologies: ['Django', 'Python', 'PostgreSQL', 'Bootstrap', 'JavaScript', 'Stripe API', 'Redis'],
+        technologies: ['Kotlin', 'Jetpack compose', 'Firebase', 'Android'],
         github: 'https://github.com/votre-username/ecommerce-django',
         demo: 'https://votre-demo-ecommerce.com',
         features: ['Product Catalog', 'Shopping Cart', 'Payment Integration', 'Admin Dashboard', 'User Authentication', 'Inventory Management']
