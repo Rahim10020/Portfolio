@@ -479,14 +479,12 @@ function openProjectModal(projectId) {
                 <div class="modal-links">
                     <h3>Project Links</h3>
                     <div class="modal-project-links">
-                        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
+                        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-link-btn" title="View Source Code">
                             <i class="fab fa-github"></i>
-                            View Source Code
                         </a>
                         ${project.demo && project.demo.includes('http') ? `
-                            <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
+                            <a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="modal-link-btn" title="Live Demo">
                                 <i class="fas fa-external-link-alt"></i>
-                                Live Demo
                             </a>
                         ` : ''}
                     </div>
