@@ -501,16 +501,20 @@ h6 {
 }
 
 .social-links {
-    display: grid;
-    align-content: center;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    justify-content: center;
 }
 
 .social-link {
-    display: inline-block;
-    margin: 8px 0;
-    padding: 10px 20px;
-    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     background-color: var(--mainColor);
     border: 1px solid var(--borderColor);
     transition: all 0.3s ease;
@@ -519,26 +523,21 @@ h6 {
 }
 
 .social-link i {
-    font-size: 1.5em;
-    margin-right: 10px;
+    font-size: 1.8em;
     transition: all 0.3s ease;
-    min-width: 24px;
     text-align: center;
 }
+
 
 .social-link:hover {
     background-color: var(--buttonColor);
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.1);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .social-link:hover i {
     transform: scale(1.1);
-}
-
-.social-link:hover span {
-    color: white;
 }
 
 .post-wrapper {
