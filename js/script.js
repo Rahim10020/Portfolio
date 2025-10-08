@@ -611,14 +611,7 @@ function generateProjectsHTML() {
         projectElement.innerHTML = `
             <div class="post" id="project-${projectId}" tabindex="0">
                 <div class="post-main">
-                <div class="project-gallery">
-                    <div class="gallery-thumbnails">
-                        ${project.images.map((image, index) =>
-            `<img class="thumbnail ${index === 0 ? 'active' : ''}" src="${image}"
-                                alt="Screenshot ${index + 1} of project ${project.title}"
-                                onclick="changeMainImage(this, '${projectId}')" />`
-        ).join('')}
-                    </div>
+                <div class="project-image">
                     <img class="main-thumbnail" src="${project.images[0]}" alt="Main screenshot of project ${project.title}" />
                 </div>
                 <div class="post-preview">
