@@ -504,7 +504,7 @@ h6 {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
 }
 
@@ -520,6 +520,19 @@ h6 {
     transition: all 0.3s ease;
     text-decoration: none;
     color: var(--secondaryText);
+    position: relative;
+}
+
+.social-link::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background-color: var(--borderColor);
+    transition: all 0.3s ease;
 }
 
 .social-link i {
@@ -538,6 +551,11 @@ h6 {
 
 .social-link:hover i {
     transform: scale(1.1);
+}
+
+.social-link:hover::after {
+    background-color: var(--buttonColor);
+    opacity: 0.7;
 }
 
 .post-wrapper {
