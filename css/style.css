@@ -1809,3 +1809,14 @@ h6 {
 
     /* Ajoutez d'autres sélecteurs si besoin */
 }
+
+/* Réduction de la taille de l'image de profil sur mobile */
+@media (max-width: 767px) {
+
+    .profile-image,
+    #profile-image {
+        width: 80px !important;
+        height: 80px !important;
+        /* Ajustez selon vos besoins */
+    }
+}
