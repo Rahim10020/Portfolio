@@ -1813,6 +1813,14 @@ h6 {
         font-size: 0.85rem;
     }
 
+    /* Centrer les liens des réseaux sociaux */
+    .social-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
 }
 
 /* Réduction de la taille de l'image de profil sur mobile */
