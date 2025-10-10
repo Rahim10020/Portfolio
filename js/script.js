@@ -533,11 +533,58 @@ function closeModal() {
 }
 
 // ===========================================
-// NAVIGATION IMPROVEMENTS
+// NAVIGATION IMPROVEMENTS & MOBILE MENU
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('#navigation a[href^="#"]')
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
+    const navigation = document.getElementById('navigation')
+
+    // Mobile menu toggle functionality
+    if (mobileMenuToggle && navigation) {
+        mobileMenuToggle.addEventListener('click', function () {
+            navigation.classList.toggle('mobile-menu-open')
+
+            // Update aria-expanded for accessibility
+            const isExpanded = navigation.classList.contains('mobile-menu-open')
+            mobileMenuToggle.setAttribute('aria-expanded', isExpanded)
+
+            // Change icon based on menu state
+            const icon = mobileMenuToggle.querySelector('i')
+            if (icon) {
+                icon.className = isExpanded ? 'fas fa-times' : 'fas fa-bars'
+            }
+        })
+
+        // Close mobile menu when clicking on a nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                navigation.classList.remove('mobile-menu-open')
+                mobileMenuToggle.setAttribute('aria-expanded', 'false')
+
+                // Reset icon
+                const icon = mobileMenuToggle.querySelector('i')
+                if (icon) {
+                    icon.className = 'fas fa-bars'
+                }
+            })
+        })
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!navigation.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                navigation.classList.remove('mobile-menu-open')
+                mobileMenuToggle.setAttribute('aria-expanded', 'false')
+
+                // Reset icon
+                const icon = mobileMenuToggle.querySelector('i')
+                if (icon) {
+                    icon.className = 'fas fa-bars'
+                }
+            }
+        })
+    }
 
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
