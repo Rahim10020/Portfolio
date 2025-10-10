@@ -1560,3 +1560,104 @@ h6 {
         right: 20px;
     }
 }
+
+/* Overlay pour le zoom d'image sur carte projet */
+.thumbnail-zoom-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.thumbnail-zoom-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.thumbnail-zoomed {
+    position: fixed !important;
+    z-index: 10000 !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 85vw !important;
+    height: 75vh !important;
+    max-width: 1000px !important;
+    max-height: 85vh !important;
+    object-fit: contain !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+    background: var(--secondaryColor);
+    padding: 20px !important;
+    border: 3px solid var(--accent) !important;
+    transform: translate(-50%, -50%) scale(1.02) !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: zoom-out;
+}
+
+/* Animation d'entrée pour l'image zoomée */
+.thumbnail-zoomed {
+    animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.02);
+        opacity: 1;
+    }
+}
+
+/* Effet de zoom au hover sur les images des cartes */
+.main-thumbnail {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-thumbnail:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 8px 25px rgba(23, 162, 184, 0.3) !important;
+    border-radius: 12px !important;
+}
+
+/* Amélioration du curseur pour indiquer le zoom possible */
+.main-thumbnail {
+    cursor: zoom-in;
+}
+
+/* Responsive pour les petits écrans */
+@media screen and (max-width: 768px) {
+    .thumbnail-zoomed {
+        width: 95vw !important;
+        height: 70vh !important;
+        max-width: none !important;
+        max-height: 75vh !important;
+        padding: 15px !important;
+        border-radius: 15px !important;
+    }
+
+    .thumbnail-zoom-overlay {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .thumbnail-zoomed {
+        width: 100vw !important;
+        height: 60vh !important;
+        max-height: 70vh !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+    }
+}
