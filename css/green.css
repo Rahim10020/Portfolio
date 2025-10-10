@@ -12,5 +12,8 @@
     --previewBg: rgb(81, 90, 72, 0.8);
     --previewShadow: #2a2f25;
 
-    --buttonColor: #669966; 
+    --buttonColor: #669966;
+    --accent: #669966;
+    --success: #28a745;
+    --error: #dc3545;
 }
