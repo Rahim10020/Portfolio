@@ -1772,3 +1772,40 @@ h6 {
         border-radius: 10px !important;
     }
 }
+
+/* Réduction des tailles de texte sur mobile */
+@media (max-width: 767px) {
+    body {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    .post-title,
+    .modal-title {
+        font-size: 1.1rem;
+    }
+
+    .post-description,
+    .modal-description,
+    p {
+        font-size: 0.95rem;
+    }
+
+    .tech-tag,
+    .tech-tag-modal {
+        font-size: 0.85rem;
+    }
+
+    /* Ajoutez d'autres sélecteurs si besoin */
+}
