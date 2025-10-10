@@ -634,11 +634,21 @@ h6 {
     width: 320px;
     /* largeur de base d'une carte */
     cursor: pointer;
+    /* z-index par défaut */
+    z-index: 1;
 }
 
-.post:hover {
+.post:hover,
+.post.target-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* Ne pas élever la carte juste parce qu'elle est .target-card */
+.post.target-card {
+    z-index: 5;
+    /* SUPPRIMEZ transform et box-shadow ici */
 }
 
 /* Features panel - now positioned absolutely to overlay on target cards */
@@ -663,12 +673,6 @@ h6 {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-}
-
-.post.target-card {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    z-index: 5;
 }
 
 .features-content {
