@@ -1443,8 +1443,9 @@ h6 {
     }
 
     /* Hamburger menu button for mobile */
+    /* Hide mobile menu toggle by default (desktop) */
     .mobile-menu-toggle {
-        display: block;
+        display: none;
         position: absolute;
         right: 15px;
         top: 50%;
@@ -1457,6 +1458,13 @@ h6 {
         padding: 8px;
         border-radius: 5px;
         transition: all 0.3s ease;
+    }
+
+    /* Show mobile menu toggle only on mobile */
+    @media screen and (max-width: 800px) {
+        .mobile-menu-toggle {
+            display: block;
+        }
     }
 
     .mobile-menu-toggle:hover {
@@ -1654,6 +1662,13 @@ h6 {
         height: 12px;
         width: 12px;
         margin: 3px;
+    }
+}
+
+/* Masquer le bouton hamburger sur desktop */
+@media (min-width: 768px) {
+    #mobile-menu-toggle {
+        display: none !important;
     }
 }
 
