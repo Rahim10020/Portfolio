@@ -1791,6 +1791,12 @@ h6 {
         font-size: 1.1rem;
     }
 
+    .profession {
+        font-size: 22px !important;
+        font-weight: 600 !important;
+
+    }
+
     .post-title,
     .modal-title {
         font-size: 1.1rem;
@@ -1807,7 +1813,6 @@ h6 {
         font-size: 0.85rem;
     }
 
-    /* Ajoutez d'autres sélecteurs si besoin */
 }
 
 /* Réduction de la taille de l'image de profil sur mobile */
@@ -1817,6 +1822,5 @@ h6 {
     #profile-image {
         width: 80px !important;
         height: 80px !important;
-        /* Ajustez selon vos besoins */
     }
 }
