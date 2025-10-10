@@ -379,15 +379,15 @@ const projectData = {
         features: ['Station Locator: Find gas stations closest to your current position', 'Geolocation: Automatic distance calculation from your current location', 'Advanced Search: Search by station name or address', ' History: View your recently visited stations', 'Modern Interface: Modern design with Material Design 3', 'Real-time: Data synchronized in real-time with Firebase']
     },
     project2: {
-        title: 'Fitness Mobile App',
-        description: 'Cross-platform fitness application built with Flutter, featuring workout tracking, progress monitoring, and social features for fitness enthusiasts.',
-        longDescription: 'A comprehensive fitness companion app that helps users track their workouts, monitor progress, and stay motivated. Built with Flutter and Dart, this app provides personalized workout plans, exercise demonstrations, progress analytics, and social features to connect with other fitness enthusiasts. The app integrates with Firebase for real-time data synchronization and uses SQLite for offline functionality.',
+        title: 'PixelPulse-blog',
+        description: 'Blog web app for tech.',
+        longDescription: 'PixelPulse is a modern and high-performance blog platform designed for developers, content creators, and technology enthusiasts. It offers a rich ecosystem for sharing knowledge, technology insights, and interacting with a growing community.',
         images: ['./images/ecran2.png', './images/history.png', './images/filter.png'],
         currentImageIndex: 0,
-        technologies: ['Flutter', 'Dart', 'Firebase', 'Provider', 'SQLite', 'Google Maps API'],
-        github: 'https://github.com/votre-username/fitness-flutter',
-        demo: 'https://play.google.com/store/apps/details?id=com.votreapp.fitness',
-        features: ['Workout Tracking', 'Progress Analytics', 'Exercise Library', 'Social Features', 'Offline Mode', 'GPS Tracking']
+        technologies: ['Next JS', 'NextAuth JS', 'Postgresql', 'Prisma', 'Tailwind CSS'],
+        github: 'https://github.com/Rahim10020/tech-pulse',
+        demo: 'https://pixelpulse-blog.vercel.app/',
+        features: ['Article Publishing: A rich text editor to create and publish your articles', 'Category Management: Organize your articles into categories for easy navigation', 'Interactive Comments: Engage with your readers through a commenting system', 'Powerful Search: Quickly find articles with efficient search functionality.', 'Author Profiles: Showcase your biography and contributions',]
     },
     project3: {
         title: 'Android Task Manager',
