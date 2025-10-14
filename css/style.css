@@ -173,14 +173,9 @@ h6 {
 .profession {
     font-size: 42px !important;
     font-weight: 600 !important;
-    color: var(--mainText) !important;
     text-align: center;
     margin-top: 10px;
     letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s ease-out 4s forwards, fadeInOut 3s ease-in-out 6s infinite;
 }
 
 @keyframes fadeInUp {
@@ -1830,5 +1825,111 @@ h6 {
     #profile-image {
         width: 80px !important;
         height: 80px !important;
+    }
+}
+
+/* ===== SHINY TEXT ANIMATIONS ===== */
+
+/* Base shiny text styling with green theme */
+.shiny-text {
+    background: linear-gradient(120deg,
+            rgba(40, 167, 69, 0) 30%,
+            rgba(40, 167, 69, 0.9) 50%,
+            rgba(40, 167, 69, 0) 70%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-color: var(--mainText);
+    display: inline-block;
+    animation: shine 2.5s linear infinite;
+    position: relative;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+}
+
+/* Enhanced shine effect for better visibility */
+.shiny-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(120deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.4) 50%,
+            transparent 70%);
+    background-size: 200% 100%;
+    animation: shine-overlay 2.5s linear infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Fallback for browsers that don't support background-clip */
+@supports not (-webkit-background-clip: text) {
+    .shiny-text {
+        color: var(--mainText);
+        background: linear-gradient(120deg,
+                rgba(40, 167, 69, 0) 30%,
+                rgba(40, 167, 69, 0.9) 50%,
+                rgba(40, 167, 69, 0) 70%);
+        background-size: 200% 100%;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        -webkit-text-fill-color: initial;
+        animation: shine 2.5s linear infinite;
+        position: relative;
+    }
+
+    .shiny-text::before {
+        display: none;
+    }
+}
+
+/* Disabled state - no animation */
+.shiny-text.disabled {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: var(--mainText);
+    opacity: 0.6;
+}
+
+/* Keyframe animation for the shine effect */
+@keyframes shine {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* Enhanced overlay animation for better visibility */
+@keyframes shine-overlay {
+    0% {
+        background-position: 120% 0;
+    }
+
+    100% {
+        background-position: -120% 0;
+    }
+}
+
+/* Responsive adjustments for shiny text */
+@media screen and (max-width: 768px) {
+    .shiny-text {
+        animation-duration: 4s;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .shiny-text {
+        animation-duration: 5s;
     }
 }
