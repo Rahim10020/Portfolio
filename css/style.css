@@ -1834,23 +1834,24 @@ h6 {
 
 /* ===== SHINY TEXT ANIMATIONS - THEME AWARE ===== */
 
-/* Base shiny text styling - adapts to current theme */
+/* Base shiny text styling - white text with colored shine */
 .shiny-text {
     position: relative;
     display: inline-block;
     font-weight: 600;
-    color: var(--mainText);
+    color: #ffffff;
+    /* Force white text */
 
-    /* Create shine effect using theme colors */
+    /* White text with colored shine effect */
     background: linear-gradient(120deg,
-            transparent 30%,
-            var(--accent) 50%,
-            transparent 70%);
+            #ffffff 30%,
+            var(--mainColor) 50%,
+            #ffffff 70%);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
+    animation: shine 8s linear infinite;
 }
 
 /* Enhanced shine effect overlay */
@@ -1869,7 +1870,7 @@ h6 {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shine-overlay 3s linear infinite;
+    animation: shine-overlay 8s linear infinite;
     pointer-events: none;
     z-index: 1;
 }
@@ -1877,16 +1878,17 @@ h6 {
 /* Fallback for browsers that don't support background-clip */
 @supports not (-webkit-background-clip: text) {
     .shiny-text {
-        color: var(--mainText);
+        color: #ffffff;
+        /* White text fallback */
         background: linear-gradient(120deg,
-                transparent 30%,
-                var(--accent) 50%,
-                transparent 70%);
+                #ffffff 30%,
+                var(--mainColor) 50%,
+                #ffffff 70%);
         background-size: 200% 100%;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
         -webkit-text-fill-color: initial;
-        animation: shine 3s linear infinite;
+        animation: shine 8s linear infinite;
         position: relative;
     }
 
@@ -1900,7 +1902,8 @@ h6 {
     animation: none;
     background: none;
     -webkit-text-fill-color: initial;
-    color: var(--mainText);
+    color: #ffffff;
+    /* White text even when disabled */
     opacity: 0.6;
 }
 
@@ -1929,12 +1932,12 @@ h6 {
 /* Responsive adjustments for shiny text */
 @media screen and (max-width: 768px) {
     .shiny-text {
-        animation-duration: 4s;
+        animation-duration: 10s;
     }
 }
 
 @media screen and (max-width: 480px) {
     .shiny-text {
-        animation-duration: 5s;
+        animation-duration: 12s;
     }
 }
