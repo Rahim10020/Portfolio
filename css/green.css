@@ -16,4 +16,8 @@
     --accent: #669966;
     --success: #28a745;
     --error: #dc3545;
+
+    /* Override shiny text theme variables for green theme */
+    --accent-color-full: #669966;
+    --accent-color-transparent: rgba(102, 153, 102, 0);
 }

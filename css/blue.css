@@ -16,4 +16,8 @@
     --accent: #17a2b8;
     --success: #28a745;
     --error: #dc3545;
+
+    /* Override shiny text theme variables for blue theme */
+    --accent-color-full: #17a2b8;
+    --accent-color-transparent: rgba(23, 162, 184, 0);
 }
